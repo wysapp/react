@@ -1,5 +1,7 @@
 import React, {Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import shallowEqual from 'recompose/shallowEqual';
+import autoPrefix from '../utils/autoPrefix';
 import transitions from '../styles/transitions';
 import ScaleInTransitionGroup from './ScaleIn';
 
@@ -17,6 +19,35 @@ class FocusRipple extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   };
+
+  componentDidMount() {
+    console.log('componentDidMount-111111111111111111111111111111');
+    if ( this.props.show) {
+      this.setRippleSize();
+      this.pulsate();
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      !shallowEqual(this.props, nextProps) ||
+      !shallowEqual(this.state, nextState)
+    );
+  }
+
+  componentDidUpdate() {
+    console.log('222222222222222222222222222222', this.props.show);
+    if (this.props.show) {
+      this.setRippleSize();
+      this.pulsate();
+    } else {
+      if(this.timeout) clearTimeout(this.timeout);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
 
   getRippleElement(props) {
     const {
@@ -38,6 +69,34 @@ class FocusRipple extends Component {
     }, innerStyle);
 
     return <div ref="innerCircle" style={prepareStyles(Object.assign({}, innerStyles))} />;
+  }
+
+  pulsate = () => {
+    const innerCircle = ReactDOM.findDOMNode(this.refs.innerCircle);
+    if ( !innerCircle) return;
+
+    const startScale = 'scale(1)';
+    const endScale = 'scale(0.85)';
+    const currentScale = innerCircle.style.transform || startScale;
+    const nextScale = currentScale === startScale ? endScale : startScale;
+
+    autoPrefix.set(innerCircle.style, 'transform', nextScale);
+    this.timeout = setTimeout(this.pulsate, pulsateDuration);
+  }
+
+  setRippleSize() {
+    const el = ReactDOM.findDOMNode(this.refs.innerCircle);
+    const height = el.offsetHeight;
+    const width = el.offsetWidth;
+    const size = Math.max(height, width);
+
+    let oldTop = 0;
+    if (el.style.top.indexOf('px', el.style.top.length - 2) !== -1) {
+      oldTop = parseInt(el.style.top);
+    }
+
+    el.style.height = `${size}px`;
+    el.style.top = `${(height / 2) - (size /2) + oldTop}px`;
   }
 
   render() {

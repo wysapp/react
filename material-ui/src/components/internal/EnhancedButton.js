@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {createChildFragment} from '../utils/childUtils';
+import Events from '../utils/events';
+import keycode from 'keycode';
 import FocusRipple from './FocusRipple';
 import TouchRipple from './TouchRipple';
 
@@ -7,6 +9,34 @@ import TouchRipple from './TouchRipple';
 let styleInjected = false;
 let listening = false;
 let tabPressed = false;
+
+function injectStyle() {
+  if (!styleInjected) {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      button::-moz-focus-inner,
+      input::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+      }
+    `;
+
+    document.body.appendChild(style);
+    styleInjected = true;
+  }
+}
+
+
+function listenForTabPresses() {
+  if (!listening) {
+    Events.on(window, 'keydown', (event) => {
+      console.log('window-event-tab-keydown-000000000000000000000000');
+      tabPressed = keycode(event) === 'tab';
+    });
+
+    listening = true;
+  }
+}
 
 class EnhancedButton extends Component {
   static propTypes = {
@@ -61,8 +91,29 @@ class EnhancedButton extends Component {
 
   componentWillMount() {
     const { disabled, disableKeyboardFocus, keyboardFocused} = this.props;
+    
     if (!disabled && keyboardFocused && !disableKeyboardFocus) {
       this.setState({isKeyboardFocused: true});
+    }
+  }
+
+  componentDidMount() {
+    injectStyle();
+    listenForTabPresses();
+    if ( this.state.isKeyboardFocused) {
+      this.refs.enhancedButton.focus();
+      this.props.onKeyboardFocus(null, true);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.focusTimeout);
+  }
+
+  setKeyboardFocus(event) {
+    if (!this.state.isKeyboardFocused) {
+      this.setState({isKeyboardFocused: true});
+      this.props.onKeyboardFocus(event, true);
     }
   }
 
@@ -113,7 +164,21 @@ class EnhancedButton extends Component {
   }
 
   handleFocus = (event) => {
-    console.log('raisedButton-event-onFocus');
+    
+    if (event) event.persist();
+    if ( !this.props.disabled && !this.props.disableKeyboardFocus) {
+      // setTimeout is needed because the focus event fires first
+      // Wait so that we can capture if this was a keyboard focus
+      // or touch focus
+      this.focusTimeout = setTimeout(() => {
+        if (tabPressed) {
+          this.setKeyboardFocus(event);
+          tabPressed = false;
+        }
+      }, 150);
+
+      this.props.onFocus(event);
+    }
   }
 
   handleTouchTap = (event) => {

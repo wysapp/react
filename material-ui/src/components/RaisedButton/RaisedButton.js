@@ -161,21 +161,51 @@ class RaisedButton extends Component {
   }
 
   handleMouseDown = (event) => {
-    console.log('raisedButton-event-handleMouseDown');    
+    if (event.button === 0) {
+      this.setState({
+        zDepth: this.state.initialZDepth + 1,
+      });
+    }   
+
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(event);
+    }
     
   }
 
   handleMouseUp = (event) => {
-    console.log('raisedButton-event-handleMouseUp');    
+    this.setState({
+      zDepth: this.state.initialZDepth,
+    });
+    if (this.props.onMouseUp) {
+      this.props.onMouseUp(event);
+    }
     
   }
 
   handleMouseLeave = (event) => {
-    console.log('raisedButton-event-mouseleave');    
+    if (!this.state.keyboardFocused) {
+      this.setState({
+        zDepth: this.state.initialZDepth,
+        hovered: false,
+      });
+    }
+
+    if(this.props.onMouseLeave) {
+      this.props.onMouseLeave(event);
+    }
   }
 
   handleMouseEnter = (event) => {
-    console.log('raisedButton-event-mouseenter');
+    if (!this.state.keyboardFocused && !this.state.touched) {
+      this.setState({
+        hovered: true,
+      });
+    }
+
+    if ( this.props.onMouseEnter) {
+      this.props.onMouseEnter(event);
+    }
   }
 
   handleTouchStart = (event) => {
@@ -189,7 +219,15 @@ class RaisedButton extends Component {
   }
 
   handleKeyboardFocus = (event, keyboardFocused) => {
-    console.log('handleKeyboardFocus');
+    const zDepth = (keyboardFocused && !this.props.disabled) ? 
+      this.state.initialZDepth + 1 :
+      this.state.initialZDepth;
+    
+    this.setState({
+      zDepth: zDepth,
+      keyboardFocused: keyboardFocused,
+    });
+
   }
 
   render() {
