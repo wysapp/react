@@ -1,10 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './Main';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
 
-// injectTapEventPlugin();
-
-
+injectTapEventPlugin();
 
 render(<Main />, document.getElementById('app'));

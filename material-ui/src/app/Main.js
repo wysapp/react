@@ -25,20 +25,21 @@ class Main extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleTouchTap = this.handleTouchTap.bind(this);
+    // this.handleTouchTap = this.handleTouchTap.bind(this);
 
     this.state = {
       open: false,
     };
   }
 
-  handleTouchTap() {
+  handleTouchTap = () => {
     this.setState({
       open: true,
     });
   }
 
   render() {
+    
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div style={styles.container}>
         <h1>Material-UI</h1>

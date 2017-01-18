@@ -82,3 +82,18 @@ export function fade(color, value) {
 
   return convertColorToString(color);
 }
+
+export function darken(color, coefficient) {
+  color = decomposeColor(color);
+  coefficient = clamp(coefficient, 0, 1);
+
+  if ( color.type.indexOf('hsl') > -1) {
+    color.values[2] *= 1 - coefficient;
+  } else if (color.type.indexOf('rgb') > -1) {
+    for (let i = 0; i < 3; i++) {
+      color.values[i] *= 1 - coefficient;
+    }
+  }
+
+  return convertColorToString(color);
+}

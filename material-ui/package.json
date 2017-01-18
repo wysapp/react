@@ -27,14 +27,20 @@
     "keycode": "^2.1.1",
     "lodash.merge": "^4.6.0",
     "lodash.throttle": "^4.1.1",
+    "react-addons-create-fragment": "^15.0.0",
+    "react-addons-transition-group": "^15.0.0",
+    "react-event-listener": "^0.4.0",
     "recompose": "^0.21.0",
     "simple-assign": "^0.1.0",
     "warning": "^3.0.0",
     "inline-style-prefixer": "^2.0.1",
 
     
+    "react-addons-test-utils": "^15.4.0",
+
+    
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^2.0.0"
   }
 }

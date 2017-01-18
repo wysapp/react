@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { fade } from '../utils/colorManipulator';
+import {darken, fade } from '../utils/colorManipulator';
 import lightBaseTheme from './baseThemes/lightBaseTheme';
 import zIndex from './zIndex';
 import autoprefixer from '../utils/autoprefixer';
@@ -32,6 +32,11 @@ export default function getMuiTheme(muiTheme, ...more) {
       minWidth: 88,
       iconButtonSize: spacing.iconSize * 2,
     },
+
+    enhancedButton: {
+      tapHighlightColor: transparent,
+    },
+
     flatButton: {
       color: transparent,
       buttonFilterColor: '#999999',
@@ -42,6 +47,39 @@ export default function getMuiTheme(muiTheme, ...more) {
       fontSize: typography.fontStyleButtonFontSize,
       fontWeight: typography.fontWeightMedium,
     },
+
+    paper: {
+      color: palette.textColor,
+      backgroundColor: palette.canvasColor,
+      zDepthShadows: [
+        [1, 6, 0.12, 1, 4, 0.12],
+        [3, 10, 0.16, 3, 10, 0.23],
+        [10, 30, 0.19, 6, 10, 0.23],
+        [14, 45, 0.25, 10, 18, 0.22],
+        [19, 60, 0.30, 15, 20, 0.22],
+      ].map((d) => (
+        `0 ${d[0]}px ${d[1]}px ${fade(palette.shadowColor, d[2])},
+         0 ${d[3]}px ${d[4]}px ${fade(palette.shadowColor, d[5])}`
+      )),
+    },
+
+    raisedButton: {
+      color: palette.alternateTextColor,
+      textColor: palette.textColor,
+      primaryColor: palette.primaryColor,
+      primaryTextColor: palette.alternateTextColor,
+      secondaryColor: palette.accent1Color,
+      secondaryTextColor: palette.alternateTextColor,
+      disabledColor: darken(palette.alternateTextColor, 0.1),
+      disabledTextColor: fade(palette.textColor, 0.3),
+      fontSize: typography.fontStyleButtonFontSize,
+      fontWeight: typography.fontWeightMedium,
+    },
+
+    ripple: {
+      color: fade(palette.textColor, 0.87),
+    },
+
   }, muiTheme, {
     baseTheme,
     rawTheme: baseTheme,

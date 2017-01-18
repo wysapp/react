@@ -5,7 +5,7 @@ function getStyles(props, context) {
 
   return {
     root: {
-      position: 'relation',
+      position: 'relative',
       paddingLeft: baseTheme.spacing.desktopGutterLess,
       paddingRight: baseTheme.spacing.desktopGutterLess,
       verticalAlign: 'middle',
