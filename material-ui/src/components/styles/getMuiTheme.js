@@ -54,6 +54,10 @@ export default function getMuiTheme(muiTheme, ...more) {
       fontWeight: typography.fontWeightMedium,
     },
 
+    overlay: {
+      backgroundColor: lightBlack,
+    },
+
     paper: {
       color: palette.textColor,
       backgroundColor: palette.canvasColor,
