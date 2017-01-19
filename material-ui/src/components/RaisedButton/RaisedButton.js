@@ -160,7 +160,23 @@ class RaisedButton extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('raisedButton-event-componentWillReceiveProps');
+    const zDepth = nextProps.disabled ? 0 : 1;
+    const nextState = {
+      zDepth: zDepth,
+      initialZDepth: zDepth,
+    };
+
+    if (nextProps.disabled) {
+      nextState.hovered = false;
+    }
+
+    this.setState(nextState);
+  }
+
   handleMouseDown = (event) => {
+    console.log('raisedButton-event-handleMouseDown');
     if (event.button === 0) {
       this.setState({
         zDepth: this.state.initialZDepth + 1,
@@ -174,6 +190,7 @@ class RaisedButton extends Component {
   }
 
   handleMouseUp = (event) => {
+    console.log('raisedButton-event-handleMouseUp');
     this.setState({
       zDepth: this.state.initialZDepth,
     });
@@ -184,6 +201,7 @@ class RaisedButton extends Component {
   }
 
   handleMouseLeave = (event) => {
+    console.log('raisedButton-event-handleMouseLeave');
     if (!this.state.keyboardFocused) {
       this.setState({
         zDepth: this.state.initialZDepth,
@@ -197,6 +215,7 @@ class RaisedButton extends Component {
   }
 
   handleMouseEnter = (event) => {
+    console.log('raisedButton-event-handleMouseEnter');
     if (!this.state.keyboardFocused && !this.state.touched) {
       this.setState({
         hovered: true,
@@ -210,12 +229,28 @@ class RaisedButton extends Component {
 
   handleTouchStart = (event) => {
     console.log('raisedButton-event-handleTouchStart');
+    this.setState({
+      touched: true,
+      zDepth: this.state.initialZDepth + 1,
+    });
+
+    if (this.props.onTouchStart) {
+      this.props.onTouchStart(event);
+    }
     
   }
+ 
   
   handleTouchEnd = (event) => {
     console.log('raisedButton-event-handleTouchEnd');
-    
+    this.setState({
+      touched: true,
+      zDepth: this.state.initialZDepth,
+    });
+
+    if (this.props.onTouchEnd) {
+      this.props.onTouchEnd(event);
+    }
   }
 
   handleKeyboardFocus = (event, keyboardFocused) => {

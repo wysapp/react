@@ -33,6 +33,12 @@ export default function getMuiTheme(muiTheme, ...more) {
       iconButtonSize: spacing.iconSize * 2,
     },
 
+    dialog: {
+      titleFontSize: 22,
+      bodyFontSize: 16,
+      bodyColor: fade(palette.textColor, 0.6),
+    },
+
     enhancedButton: {
       tapHighlightColor: transparent,
     },

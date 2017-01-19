@@ -106,14 +106,43 @@ class EnhancedButton extends Component {
     }
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    console.log('EnhancedButton-event-componentWillReceiveProps');
+    if ((nextProps.disabled || nextProps.disableKeyboardFocus) && this.state.isKeyboardFocused) {
+      this.setState({isKeyboardFocused: false});
+      if (nextProps.onKeyboardFocus) {
+        nextProps.onKeyboardFocus(null, false);
+      }
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this.focusTimeout);
+  }
+
+  isKeyboardFocused() {
+    return this.state.isKeyboardFocused;
+  }
+
+  removeKeyboardFocus(event) {
+    if (this.state.isKeyboardFocused) {
+      this.setState({isKeyboardFocused: false});
+      this.props.onKeyboardFocus(event, false);
+    }
   }
 
   setKeyboardFocus(event) {
     if (!this.state.isKeyboardFocused) {
       this.setState({isKeyboardFocused: true});
       this.props.onKeyboardFocus(event, true);
+    }
+  }
+
+  cancelFocusTimeout() {
+    if (this.focusTimeout) {
+      clearTimeout(this.focusTimeout);
+      this.focusTimeout = null;
     }
   }
 
@@ -152,6 +181,7 @@ class EnhancedButton extends Component {
         </TouchRipple>
       ) : undefined;
     
+    
     return createChildFragment({
       focusRipple,
       touchRipple,
@@ -159,8 +189,41 @@ class EnhancedButton extends Component {
     });
   }
 
+
+  handleKeyDown = (event) => {
+    console.log('EnhancedButton-event-handleKeyDown', (!this.props.disabled && !this.props.disableKeyboardFocus));
+    if (!this.props.disabled && !this.props.disableKeyboardFocus) {
+      if (keycode(event) === 'enter' && this.state.isKeyboardFocused) {
+        this.handleTouchTap(event);
+      }
+
+      if(keycode(event) === 'esc' && this.state.isKeyboardFocused) {
+        this.removeKeyboardFocus(event);
+      }
+    }
+
+    this.props.onKeyDown(event);
+
+  }
+
+
+  handleKeyUp = (event) => {
+    console.log('EnhancedButton-event-handleKeyUp');
+    if (!this.props.disabled && !this.props.disableKeyboardFocus) {
+      if (keycode(event) === 'space' && this.state.isKeyboardFocused) {
+        this.handleTouchTap(event);
+      }
+    }
+    this.props.onKeyUp(event);    
+  }
+  
+  
+
   handleBlur = (event) => {
-    console.log('raisedButton-event-onBlur');
+    console.log('EnhancedButton-event-onBlur');
+    this.cancelFocusTimeout();
+    this.removeKeyboardFocus(event);
+    this.props.onBlur(event);
   }
 
   handleFocus = (event) => {
@@ -181,12 +244,20 @@ class EnhancedButton extends Component {
     }
   }
 
+  handleClick = (event) => {
+    console.log('EnhancedButton-event-handleClick-2222222222222222');
+    if (!this.props.disabled) {
+      tabPressed = false;
+      this.props.onClick(event);
+    }
+  }
+
   handleTouchTap = (event) => {
-    // this.cancelFocusTimeout();
+    this.cancelFocusTimeout();
     if (!this.props.disabled) {
       tabPressed = false;
       console.log('cccccccccccccccccccccccccccccc');
-      // this.removeKeyboardFocus(event);
+      this.removeKeyboardFocus(event);
       this.props.onTouchTap(event);
     }
   }
@@ -265,7 +336,10 @@ class EnhancedButton extends Component {
       disabled: disabled,
       href: href,
       onBlur: this.handleBlur,
+      onClick: this.handleClick,
       onFocus: this.handleFocus,
+      onKeyUp: this.handleKeyUp,
+      onKeyDown: this.handleKeyDown,
       onTouchTap: this.handleTouchTap,
       tabIndex: disabled || disableKeyboardFocus ? -1 : tabIndex,
     };
