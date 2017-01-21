@@ -36,7 +36,7 @@ class Main extends Component {
 
   handleRequestClose = () => {
     this.setState({
-      open: true,
+      open: false,
     });
   }
 
