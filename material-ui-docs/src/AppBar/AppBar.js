@@ -3,6 +3,7 @@ import IconButton from '../IconButton';
 import NavigationMenu from '../svg-icons/navigation/menu';
 import Paper from '../Paper';
 import propTypes from '../utils/propTypes';
+import warning from 'warning';
 
 
 
@@ -94,6 +95,26 @@ class AppBar extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   };
+
+  componentDidMount() {
+    warning(!this.props.iconElementLeft || !this.props.iconClassNameLeft, `Material-UI: Properties iconElementLeft
+      and iconClassNameLeft cannot be simultaneously defined. Please use one or the other.`);
+
+    warning(!this.props.iconElementRight || !this.props.iconClassNameRight, `Material-UI: Properties iconElementRight
+      and iconClassNameRight cannot be simultaneously defined. Please use one or the other.`);
+  }
+
+  handleTouchTapLeftIconButton = (event) => {
+    if (this.props.onLeftIconButtonTouchTap) {
+      this.props.onLeftIconButtonTouchTap(event);
+    }
+  }
+
+  handleTouchTapRightIconButton = (event) => {
+    if (this.props.onRightIconButtonTouchTap) {
+      this.props.onRightIconButtonTouchTap(event);
+    }
+  }
 
   
   render() {

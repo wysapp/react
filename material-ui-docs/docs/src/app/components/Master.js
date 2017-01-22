@@ -5,6 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import spacing from 'material-ui/styles/spacing';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {darkWhite, lightWhite, grey900} from 'material-ui/styles/colors';
+import AppNavDrawer from './AppNavDrawer';
 import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 class Master extends Component {
@@ -102,6 +103,31 @@ class Master extends Component {
     return styles;
   }
 
+  handleTouchTapLeftIconButton = () => {
+    this.setState({
+      navDrawerOpen: !this.state.navDrawerOpen,
+    });
+  }
+
+  handleChangeRequestNavDrawer = (open) => {
+    this.setState({
+      navDrawerOpen: open,
+    });
+  }
+
+  handleChangeList = (event, value) => {
+    this.context.router.push(value);
+    this.setState({
+      navDrawerOpen: open,
+    });
+  }
+
+  handleChangeMuiTheme = (muiTheme) => {
+    this.setState({
+      muiTheme: muiTheme,
+    });
+  }
+
   render() {
     const {
       location,
@@ -144,6 +170,7 @@ class Master extends Component {
       <div>
         <Title render="Material-UI" />
         <AppBar 
+          onLeftIconButtonTouchTap={this.handleTouchTapLeftIconButton}
           title={title}
           zDepth={0}
           iconElementRight={
@@ -154,6 +181,27 @@ class Master extends Component {
           }
           style={styles.appBar}
           showMenuIconButton={showMenuIconButton}
+        />
+        {
+          title !== '' ?
+            <div style={prepareStyles(styles.root)}>
+              <div style={prepareStyles(styles.content)}>
+              {
+                React.cloneElement(children, {
+                  onChangeMuiTheme: this.handleChangeMuiTheme,
+                })
+              }
+              </div>
+            </div> :
+            children
+        }
+        <AppNavDrawer
+          style={styles.navDrawer}
+          location={location}
+          docked={docked}
+          onRequestChangeNavDrawer={this.handleChangeRequestNavDrawer}
+          onChangeList={this.handleChangeList}
+          open={navDrawerOpen}
         />
       </div>
     );
