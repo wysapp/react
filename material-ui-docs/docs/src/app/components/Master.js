@@ -6,6 +6,7 @@ import spacing from 'material-ui/styles/spacing';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {darkWhite, lightWhite, grey900} from 'material-ui/styles/colors';
 import AppNavDrawer from './AppNavDrawer';
+import FullWidthSection from './FullWidthSection';
 import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth';
 
 class Master extends Component {
@@ -203,6 +204,31 @@ class Master extends Component {
           onChangeList={this.handleChangeList}
           open={navDrawerOpen}
         />
+
+        <FullWidthSection style={styles.footer}>
+          <p style={prepareStyles(styles.p)}>
+            {'Hand crafted with love by the engineers at '}
+            <a style={styles.a} href="http://www.call-em-all.com/Careers">
+              Call-Em-all
+            </a>
+            {' and our awesome '}
+            <a style={prepareStyles(styles.a)} href="https://github.com/callemall/material-ui/graphs/contributors">
+              contributors
+            </a>.
+          </p>
+          <IconButton 
+            iconStyle={styles.iconButton}
+            iconClassName="muidocs-icon-custom-github"
+            href="https://github.com/callemall/material-ui"
+          />
+          <p style={prepareStyles(styles.browserstack)}>
+            {'Thank you to '}
+            <a href="https://www.browserstack.com" style={prepareStyles(styles.browserstackLogo)} target="_blank">
+            <img src="http://www.browserstack.com/images/layout/logo.png" height="25" width="auto" />
+            </a>
+            {' for providing real browser testing infrastructure.'}
+          </p>
+        </FullWidthSection>
       </div>
     );
   }

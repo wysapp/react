@@ -63,6 +63,11 @@ export default function getMuiTheme(muiTheme, ...more) {
       fontWeight: typography.fontWeightMedium,
     },
 
+    drawer: {
+      width: spacing.desktopKeylineIncrement * 4,
+      color: palette.canvasColor,
+    },
+
     overlay: {
       backgroundColor: lightBlack,
     },
