@@ -21,6 +21,7 @@ function getStyles(props, context, state) {
     raisedButton,
   } = context.muiTheme;
 
+
   const {
     disabled,
     disabledBackgroundColor,
@@ -52,8 +53,7 @@ function getStyles(props, context, state) {
     if (props.backgroundColor) {
       backgroundColor = props.backgroundColor;
     }
-
-    if (props.labelColor){
+    if (props.labelColor) {
       labelColor = props.labelColor;
     }
   }
@@ -75,6 +75,7 @@ function getStyles(props, context, state) {
       borderRadius: borderRadius,
       transition: transitions.easeOut(),
       backgroundColor: backgroundColor,
+      // That's the default value for a button but not a link
       textAlign: 'center',
     },
     label: {
@@ -98,7 +99,8 @@ function getStyles(props, context, state) {
     overlay: {
       height: buttonHeight,
       borderRadius: borderRadius,
-      backgroundColor: (state.keyboardFocused || state.hovered ) && !disabled && fade(labelColor, amount),
+      backgroundColor: (state.keyboardFocused || state.hovered) && !disabled &&
+        fade(labelColor, amount),
       transition: transitions.easeOut(),
       top: 0,
     },
@@ -108,6 +110,7 @@ function getStyles(props, context, state) {
     },
   };
 }
+
 
 class RaisedButton extends Component {
   static muiName = 'RaisedButton';
@@ -161,7 +164,6 @@ class RaisedButton extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('raisedButton-event-componentWillReceiveProps');
     const zDepth = nextProps.disabled ? 0 : 1;
     const nextState = {
       zDepth: zDepth,
@@ -176,7 +178,6 @@ class RaisedButton extends Component {
   }
 
   handleMouseDown = (event) => {
-    console.log('raisedButton-event-handleMouseDown');
     if (event.button === 0) {
       this.setState({
         zDepth: this.state.initialZDepth + 1,
@@ -190,7 +191,6 @@ class RaisedButton extends Component {
   }
 
   handleMouseUp = (event) => {
-    console.log('raisedButton-event-handleMouseUp');
     this.setState({
       zDepth: this.state.initialZDepth,
     });
@@ -201,7 +201,6 @@ class RaisedButton extends Component {
   }
 
   handleMouseLeave = (event) => {
-    console.log('raisedButton-event-handleMouseLeave');
     if (!this.state.keyboardFocused) {
       this.setState({
         zDepth: this.state.initialZDepth,
@@ -215,7 +214,6 @@ class RaisedButton extends Component {
   }
 
   handleMouseEnter = (event) => {
-    console.log('raisedButton-event-handleMouseEnter');
     if (!this.state.keyboardFocused && !this.state.touched) {
       this.setState({
         hovered: true,
@@ -228,7 +226,6 @@ class RaisedButton extends Component {
   }
 
   handleTouchStart = (event) => {
-    console.log('raisedButton-event-handleTouchStart');
     this.setState({
       touched: true,
       zDepth: this.state.initialZDepth + 1,
@@ -242,7 +239,6 @@ class RaisedButton extends Component {
  
   
   handleTouchEnd = (event) => {
-    console.log('raisedButton-event-handleTouchEnd');
     this.setState({
       touched: true,
       zDepth: this.state.initialZDepth,
@@ -266,7 +262,6 @@ class RaisedButton extends Component {
   }
 
   render() {
-    console.log('uuuuuuuuuuuuuuuuuuuu', this.context.muiTheme);
     
     const {
       backgroundColor,
@@ -294,8 +289,6 @@ class RaisedButton extends Component {
     const styles = getStyles(this.props, this.context, this.state);
     const mergedRippleStyles = Object.assign({}, styles.ripple, rippleStyle);
 
-    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee', styles);
-    console.log('raisedButton-other-props', other);
 
     const buttonEventHandlers = disabled ? {} : {
       onMouseDown: this.handleMouseDown,

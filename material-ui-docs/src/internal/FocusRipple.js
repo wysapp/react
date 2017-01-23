@@ -21,7 +21,6 @@ class FocusRipple extends Component {
   };
 
   componentDidMount() {
-    console.log('componentDidMount-111111111111111111111111111111');
     if ( this.props.show) {
       this.setRippleSize();
       this.pulsate();
@@ -36,7 +35,6 @@ class FocusRipple extends Component {
   }
 
   componentDidUpdate() {
-    console.log('222222222222222222222222222222', this.props.show);
     if (this.props.show) {
       this.setRippleSize();
       this.pulsate();

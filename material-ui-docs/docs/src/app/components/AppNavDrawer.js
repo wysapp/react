@@ -41,7 +41,7 @@ class AppNavDrawer extends Component {
   };
 
   render() {
-
+    
     const {
       location,
       docked,

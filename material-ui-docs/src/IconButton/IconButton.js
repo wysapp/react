@@ -90,7 +90,6 @@ class IconButton extends Component {
   showTooltip() {
     if (this.props.tooltip) {
       this.setState({tooltipShown: true});
-    console.log('2222222222222222-IconButton-event-showTooltip');
       
     }
   }
@@ -100,7 +99,6 @@ class IconButton extends Component {
   }
 
   handleBlur = (event) => {
-    console.log('2222222222222222-IconButton-event-handleBlur');
     this.hideTooltip();
     if(this.props.onBlur) {
       this.props.onBlur(event);
@@ -108,7 +106,6 @@ class IconButton extends Component {
   }
 
   handleFocus = (event) => {
-    console.log('2222222222222222-IconButton-event-handleFocus');
     this.showTooltip();
     if(this.props.onFocus) {
       this.props.onFocus(event);
@@ -116,7 +113,6 @@ class IconButton extends Component {
   }
 
   handleMouseLeave = (event) => {
-    console.log('2222222222222222-IconButton-event-handleMouseLeave');
     if (!this.button.isKeyboardFocused()) {
       this.hideTooltip();
     }
@@ -129,13 +125,11 @@ class IconButton extends Component {
   }
 
   handleMouseOut = (event) => {
-    console.log('2222222222222222-IconButton-event-handleMouseOut');
     if (this.props.disabled) this.hideTooltip();
     if (this.props.onMouseOut) this.props.onMouseOut(event);
   }
 
   handleMouseEnter = (event) => {
-    console.log('2222222222222222-IconButton-event-handleMouseEnter');
     this.showTooltip();
 
     if (!this.state.touch) {
@@ -155,7 +149,6 @@ class IconButton extends Component {
   }
 
   handleKeyboardFocus = (event, isKeyboardFocused) => {
-    console.log('2222222222222222-IconButton-event-handleKeyboardFocus');
     const { disabled, onFocus, onBlur, onKeyboardFocus} = this.props;
     if (isKeyboardFocused && !disabled) {
       this.showTooltip();

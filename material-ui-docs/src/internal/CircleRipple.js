@@ -23,47 +23,38 @@ class CircleRipple extends Component {
   };
 
   componentWillMount() {
-    console.log('666666666666666666-CircleRipple-componentWillMount');
   }
 
   componentDidMount() {
-    console.log('666666666666666666-CircleRipple-componentDidMount');
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log('666666666666666666-CircleRipple-shouldComponentUpdate');
     return !shallowEqual(this.props, nextProps);
   }
 
   componentWillUnmount() {
-    console.log('666666666666666666-CircleRipple-componentWillUnmount');
     clearTimeout(this.enterTimer);
     clearTimeout(this.leaveTimer);
   }
 
   componentWillAppear(callback) {
-    console.log('666666666666666666-CircleRipple-componentWillAppear', callback);
     this.initializeAnimation(callback);
   }
 
   componentWillEnter(callback) {
-    console.log('666666666666666666-CircleRipple-componentWillEnter', callback);
     this.initializeAnimation(callback);
     
   }
 
   componentDidAppear() {
-    console.log('666666666666666666-CircleRipple-componentDidAppear');
     this.animate();
   }
 
   componentDidEnter() {
-    console.log('666666666666666666-CircleRipple-componentDidEnter');
     this.animate();
   }
 
   componentWillLeave(callback) {
-    console.log('666666666666666666-CircleRipple-componentWillLeave', callback);
     const style = ReactDOM.findDOMNode(this).style;
     style.opacity = 0;
     const removeAfter = this.props.aborted ? 0 : 2000;

@@ -86,11 +86,11 @@ export default function getMuiTheme(muiTheme, ...more) {
          0 ${d[3]}px ${d[4]}px ${fade(palette.shadowColor, d[5])}`
       )),
     },
-
+    
     raisedButton: {
       color: palette.alternateTextColor,
       textColor: palette.textColor,
-      primaryColor: palette.primaryColor,
+      primaryColor: palette.primary1Color,
       primaryTextColor: palette.alternateTextColor,
       secondaryColor: palette.accent1Color,
       secondaryTextColor: palette.alternateTextColor,

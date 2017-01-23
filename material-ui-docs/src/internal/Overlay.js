@@ -53,6 +53,10 @@ class Overlay extends Component {
     muiTheme: PropTypes.object.isRequired,
   };
 
+  setOpacity(opacity) {
+    this.refs.overlay.style.opacity = opacity;
+  }
+
   render() {
     const {
       autoLockScrolling,

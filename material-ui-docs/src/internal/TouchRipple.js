@@ -39,7 +39,6 @@ class TouchRipple extends Component {
   }
 
   start(event, isRippleTouchGenerated) {
-    console.log('33333333333333-TouchRipple-event-start');
 
     const theme = this.context.muiTheme.ripple;
     if (this.ignoreNextMouseDown && !isRippleTouchGenerated) {
@@ -79,7 +78,6 @@ class TouchRipple extends Component {
   }
 
   handleMouseDown = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleMouseDown');
 
     if (event.button === 0) {
       this.start(event, false);
@@ -87,17 +85,14 @@ class TouchRipple extends Component {
   }
 
   handleMouseUp = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleMouseUp');
     this.end();
   }
 
   handleMouseLeave = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleMouseLeave');
     this.end();
   }
 
   handleTouchStart = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleTouchStart');
     event.stopPropagation();
     // If the user is swiping (not just tapping), save the position so we can
     // abort ripples if the user appears to be scrolling.
@@ -112,14 +107,12 @@ class TouchRipple extends Component {
 
 
   handleTouchEnd = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleTouchEnd');
 
     this.end();
   }
   
   
   handleTouchMove = (event) => {
-    console.log('33333333333333-TouchRipple-event-handleTouchMove');
     const timeSinceStart = Match.abs(Date.now() - this.startTime);
     if (timeSinceStart > 300) {
       this.stopListeningForScrollAbort();

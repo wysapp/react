@@ -29,13 +29,11 @@ class SvgIcon extends Component {
   };
 
   handleMouseLeave = (event) => {
-    console.log('11111111111111111-SvgIcon-envet-handleMouseLeave');
     this.setState({hovered: false});
     this.props.onMouseLeave(event);
   }
 
   handleMouseEnter = (event) => {
-    console.log('11111111111111111-SvgIcon-envet-handleMouseEnter');
     this.setState({hovered: true});
     this.props.onMouseEnter(event);
     

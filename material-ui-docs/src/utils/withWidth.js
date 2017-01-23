@@ -28,7 +28,6 @@ export default function withWidth(options = {}) {
 
 
       handleResize = () => {
-        console.log('withWidth-handleResize');
         clearTimeout(this.deferTimer);
         this.deferTimer = setTimeout(() => {
           this.updateWidth();
@@ -61,7 +60,6 @@ export default function withWidth(options = {}) {
         if ( width === null) {
           return null;
         }
-        console.log('withWidth-render', width);
         return (
           <EventListener target="window" onResize={this.handleResize}>
             <MyComponent

@@ -107,7 +107,6 @@ class EnhancedButton extends Component {
 
 
   componentWillReceiveProps(nextProps) {
-    console.log('EnhancedButton-event-componentWillReceiveProps');
     if ((nextProps.disabled || nextProps.disableKeyboardFocus) && this.state.isKeyboardFocused) {
       this.setState({isKeyboardFocused: false});
       if (nextProps.onKeyboardFocus) {
@@ -190,7 +189,6 @@ class EnhancedButton extends Component {
 
 
   handleKeyDown = (event) => {
-    console.log('EnhancedButton-event-handleKeyDown', (!this.props.disabled && !this.props.disableKeyboardFocus));
     if (!this.props.disabled && !this.props.disableKeyboardFocus) {
       if (keycode(event) === 'enter' && this.state.isKeyboardFocused) {
         this.handleTouchTap(event);
@@ -207,7 +205,6 @@ class EnhancedButton extends Component {
 
 
   handleKeyUp = (event) => {
-    console.log('EnhancedButton-event-handleKeyUp');
     if (!this.props.disabled && !this.props.disableKeyboardFocus) {
       if (keycode(event) === 'space' && this.state.isKeyboardFocused) {
         this.handleTouchTap(event);
@@ -219,14 +216,12 @@ class EnhancedButton extends Component {
   
 
   handleBlur = (event) => {
-    console.log('EnhancedButton-event-handleBlur');
     this.cancelFocusTimeout();
     this.removeKeyboardFocus(event);
     this.props.onBlur(event);
   }
 
   handleFocus = (event) => {
-    console.log('EnhancedButton-event-handleFocus');
     
     if (event) event.persist();
     if ( !this.props.disabled && !this.props.disableKeyboardFocus) {
@@ -245,7 +240,6 @@ class EnhancedButton extends Component {
   }
 
   handleClick = (event) => {
-    console.log('EnhancedButton-event-handleClick');
     if (!this.props.disabled) {
       tabPressed = false;
       this.props.onClick(event);
@@ -253,7 +247,6 @@ class EnhancedButton extends Component {
   }
 
   handleTouchTap = (event) => {
-    console.log('EnhancedButton-event-handleTouchTap');
     this.cancelFocusTimeout();
     if (!this.props.disabled) {
       tabPressed = false;
