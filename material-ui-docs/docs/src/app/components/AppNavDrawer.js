@@ -1,9 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
+import {List, ListItem, makeSelectable} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {spacing, typography, zIndex} from 'material-ui/styles';
 import {cyan500} from 'material-ui/styles/colors';
+
+const SelectableList = makeSelectable(List);
 
 const styles = {
   logo: {
@@ -51,7 +56,7 @@ class AppNavDrawer extends Component {
       if ( request.readyState === 4 && request.status === 200) {
         self.setState({
           muiVersions: JSON.parse(request.responseText),
-          version: JOSN.parse(request.responseText)[0],
+          version: JSON.parse(request.responseText)[0],
         });
       }
     };
@@ -72,6 +77,14 @@ class AppNavDrawer extends Component {
     return version;
   }
 
+  handleVersionChange = (event, index, value ) => {
+    if (value === this.firstNonPreReleaseVersion()) {
+      window.location = 'http://www.material-ui.com/';
+    } else {
+      window.location = `http://www.material-ui.com/${value}`;
+    }
+  }
+
   currentVersion() {
     if (window.location.hostname === 'location') return this.state.muiVersions[0];
     if (window.location.pathname === '/') {
@@ -79,6 +92,15 @@ class AppNavDrawer extends Component {
     } else {
       return window.location.pathname.replace(/\//g, '');
     }
+  }
+
+  handleRequestChangeLink = (event, value) => {
+    window.location = value;
+  }
+
+  handleTouchTapHeader = () => {
+    this.context.router.push('/');
+    this.props.onRequestChangeNavDrawer(false);
   }
 
   render() {
@@ -121,6 +143,101 @@ class AppNavDrawer extends Component {
             ))
           }
         </DropDownMenu>
+        <SelectableList
+          value={location.pathname}
+          onChange={onChangeList}
+        >
+          <ListItem 
+            primaryText="Get Started"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem 
+                primaryText="Rquired Knowledge"
+                value="/get-started/required-knowledge" />,
+              <ListItem 
+                primaryText="Installation"
+                value="/get-started/installation" />,
+              <ListItem primaryText="Usage" value="/get-started/usage" />,
+              <ListItem primaryText="Server Rendering" value="/get-started/server-rendering" />,
+              <ListItem primaryText="Examples" value="/get-started/examples" />,
+            ]}
+          />
+          <ListItem 
+            primaryText="Customization"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="Themes" value="/customization/themes" />,
+              <ListItem primaryText="Styles" value="/customization/styles" />,
+              <ListItem primaryText="Colors" value="/customization/colors" />,
+            ]}
+          />
+          <ListItem 
+            primaryText="Components"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem 
+                primaryText="App Bar"
+                value="/components/app-bar"
+                href="#/components/app-bar"
+              />,
+              <ListItem 
+                primaryText="Auto Complete"
+                value="/components/auto-complete"
+                href="#/components/auto-complete"
+              />,
+              <ListItem 
+                primaryText="Buttons"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem 
+                    primaryText="Flat Button"
+                    value="/components/flat-button"
+                    href="#/components/flat-button"
+                  />,
+                  <ListItem 
+                    primaryText="Raised Button"
+                    value="/components/raised-button"
+                    href="#/components/raised-button"
+                  />,
+                  <ListItem 
+                    primaryText="Floating Action Button"
+                    value="/components/floating-action-button"
+                    href="#/components/floating-action-button"
+                  />,
+                  <ListItem
+                    primaryText="Icon Button"
+                    value="/components/icon-button"
+                    href="#/components/icon-button"
+                  />,
+                ]}
+              />,
+            ]}
+          />
+          <ListItem
+            primaryText="Discover More"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="Community" value="/discover-more/community" />,
+              <ListItem primaryText="Contributing" value="/discover-more/contributing" />,
+              <ListItem primaryText="Showcase" value="/discover-more/showcase" />,
+              <ListItem primaryText="Related projects" value="/discover-more/related-projects" />,
+            ]}
+          />
+        </SelectableList>   
+
+        <Divider />
+        <SelectableList 
+          value=""
+          onChange={this.handleRequestChangeLink}
+        >
+          <Subheader>Resources</Subheader>
+          <ListItem primaryText="GitHub" value="https://github.com/callemall/material-ui" />
+          <ListItem primaryText="React" value="http://facebook.github.io/react" />
+          <ListItem
+            primaryText="Material Design"
+            value="https://www.google.com/design/spec/material-design/introduction.html"
+          />
+        </SelectableList>
       </Drawer>
     )
   }

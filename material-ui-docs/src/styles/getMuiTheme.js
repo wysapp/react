@@ -42,11 +42,27 @@ export default function getMuiTheme(muiTheme, ...more) {
       iconButtonSize: spacing.iconSize * 2,
     },
 
+    checkbox: {
+      boxColor: palette.textColor,
+      checkedColor: palette.primary1Color,
+      requiredColor: palette.primary1Color,
+      disabledColor: palette.disabledColor,
+      labelColor: palette.textColor,
+      labelDisabledColor: palette.disabledColor,
+    },
+
+    
+
     dialog: {
       titleFontSize: 22,
       bodyFontSize: 16,
       bodyColor: fade(palette.textColor, 0.6),
     },
+
+    dropDownMenu: {
+      accentColor: palette.borderColor,
+    },
+    
 
     enhancedButton: {
       tapHighlightColor: transparent,
@@ -63,9 +79,49 @@ export default function getMuiTheme(muiTheme, ...more) {
       fontWeight: typography.fontWeightMedium,
     },
 
+    gridTile: {
+      textColor: white,
+    },
+
+    icon: {
+      color: palette.canvasColor,
+      backgroundColor: palette.primary1Color,
+    },
+
+    inkBar: {
+      backgroundColor: palette.accent1Color,
+    },
+
     drawer: {
       width: spacing.desktopKeylineIncrement * 4,
       color: palette.canvasColor,
+    },
+
+    listItem: {
+      nestedLevelDepth: 18,
+      secondaryTextColor: palette.secondaryTextColor,
+      leftIconColor: grey600,
+      rightIconColor: grey600,
+    },
+
+    menu: {
+      backgroundColor: palette.canvasColor,
+      containerBackgroundColor: palette.canvasColor,
+    },
+
+    menuItem: {
+      dataHeight: 32,
+      height: 48,
+      hoverColor: fade(palette.textColor, 0.1),
+      padding: spacing.desktopGutter,
+      selectedTextColor: palette.accent1Color,
+      rightIconDesktopFill: grey600,
+    },
+
+    menuSubheader: {
+      padding: spacing.desktopGutter,
+      borderColor: palette.borderColor,
+      textColor: palette.primary1Color,
     },
 
     overlay: {
@@ -104,8 +160,43 @@ export default function getMuiTheme(muiTheme, ...more) {
       color: fade(palette.textColor, 0.87),
     },
 
+    subheader: {
+      color: fade(palette.textColor, 0.54),
+      fontWeight: typography.fontWeightMedium,
+    },
+
     svgIcon: {
       color: palette.textColor,
+    },
+
+    tabs: {
+      backgroundColor: palette.primary1Color,
+      textColor: fade(palette.alternateTextColor, 0.7),
+      selectedTextColor: palette.alternateTextColor,
+    },
+
+    toggle:{
+      thumbOnColor: palette.primary1Color,
+      thumbOffColor: palette.accent2Color,
+      thumbDisabledColor: palette.borderColor,
+      thumbRequiredColor: palette.primary1Color,
+      trackOnColor: fade(palette.primary1Color, 0.5),
+      trackOffColor: palette.primary3Color,
+      trackDisabledColor: palette.primary3Color,
+      labelColor: palette.textColor,
+      labelDisabledColor: palette.disabledColor,
+      trackRequiredColor: fade(palette.primary1Color, 0.5),
+    },
+
+    toolbar: {
+      color: fade(palette.textColor, 0.54),
+      hoverColor: fade(palette.textColor, 0.87),
+      backgroundColor: darken(palette.accent2Color, 0.05),
+      height: 56,
+      titleFontSize: 20,
+      iconColor: fade(palette.textColor, 0.4),
+      separatorColor: fade(palette.textColor, 0.175),
+      menuHoverColor: fade(palette.textColor, 0.1),
     },
 
     tooltip: {

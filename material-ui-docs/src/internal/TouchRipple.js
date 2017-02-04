@@ -113,7 +113,7 @@ class TouchRipple extends Component {
   
   
   handleTouchMove = (event) => {
-    const timeSinceStart = Match.abs(Date.now() - this.startTime);
+    const timeSinceStart = Math.abs(Date.now() - this.startTime);
     if (timeSinceStart > 300) {
       this.stopListeningForScrollAbort();
       return;

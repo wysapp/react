@@ -116,6 +116,12 @@ class AppBar extends Component {
     }
   }
 
+  handleTitleTouchTap = (event) => {
+    if(this.props.onTitleTouchTap) {
+      this.props.onTitleTouchTap(event);
+    }
+  }
+
   
   render() {
     
@@ -156,7 +162,33 @@ class AppBar extends Component {
 
     if (showMenuIconButton) {
       if (iconElementLeft) {
+        const iconElementLeftProps = {};
 
+        if (iconElementLeft.type.muiName === 'IconButton') {
+          const iconElemLeftChildren = iconElementLeft.props.children;
+          const iconButtonIconStyle = !(
+            iconElemLeftChildren &&
+            iconElemLeftChildren.props &&
+            iconElemLeftChildren.props.color
+          ) ? styles.iconButtonIconStyle : null;
+
+          iconElementLeftProps.iconStyle = Object.assign({}, iconButtonIconStyle, iconElementLeft.props.iconStyle);
+        }
+
+        if (!iconElementLeft.props.onTouchTap && this.props.onLeftIconButtonTouchTap) {
+          iconElementLeftProps.onTouchTap = this.handleTouchTapLeftIconButton;
+        }
+
+        menuElementLeft = (
+          <div style={prepareStyles(iconLeftStyle)}>
+            {
+              Object.keys(iconElementLeftProps).length > 0 ?
+                cloneElement(iconElementLeft, iconElementLeftProps) :
+                iconElementLeft
+            }
+          </div>
+        );
+        
       } else {
         menuElementLeft = (
           <IconButton 

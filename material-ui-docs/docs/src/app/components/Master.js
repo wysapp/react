@@ -119,7 +119,7 @@ class Master extends Component {
   handleChangeList = (event, value) => {
     this.context.router.push(value);
     this.setState({
-      navDrawerOpen: open,
+      navDrawerOpen: false,
     });
   }
 
