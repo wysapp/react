@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import {darken, fade } from '../utils/colorManipulator';
+import {darken, fade, emphasize, lighten } from '../utils/colorManipulator';
 import lightBaseTheme from './baseThemes/lightBaseTheme';
 import zIndex from './zIndex';
 import autoprefixer from '../utils/autoprefixer';
@@ -34,6 +34,11 @@ export default function getMuiTheme(muiTheme, ...more) {
       height: spacing.desktopKeylineIncrement,
       titleFontWeight: typography.fontWeightNormal,
       padding: spacing.desktopGutter,
+    },
+
+    avatar: {
+      color: palette.canvasColor,
+      backgroundColor: emphasize(palette.canvasColor, 0.26),
     },
 
     button: {
@@ -77,6 +82,17 @@ export default function getMuiTheme(muiTheme, ...more) {
       secondaryTextColor: palette.accent1Color,
       fontSize: typography.fontStyleButtonFontSize,
       fontWeight: typography.fontWeightMedium,
+    },
+
+    floatingActionButton: {
+      buttonSize: 56,
+      miniSize: 40,
+      color: palette.primary1Color,
+      iconColor: palette.alternateTextColor,
+      secondaryColor: palette.accent1Color,
+      secondaryIconColor: palette.alternateTextColor,
+      disabledTextColor: palette.disabledColor,
+      disabledColor: emphasize(palette.canvasColor, 0.12),
     },
 
     gridTile: {
@@ -173,6 +189,17 @@ export default function getMuiTheme(muiTheme, ...more) {
       backgroundColor: palette.primary1Color,
       textColor: fade(palette.alternateTextColor, 0.7),
       selectedTextColor: palette.alternateTextColor,
+    },
+
+    textField: {
+      textColor: palette.textColor,
+      hintColor: palette.disabledColor,
+      floatingLabelColor: palette.disabledColor,
+      disabledTextColor: palette.disabledColor,
+      errorColor: red500,
+      focusColor: palette.primary1Color,
+      backgroundColor: 'transparent',
+      borderColor: palette.borderColor,
     },
 
     toggle:{

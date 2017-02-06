@@ -238,6 +238,49 @@ class ListItem extends Component {
   }
 
 
+  applyFocusState(focusState) {
+    const button = this.refs.enhancedButton;
+    if (button) {
+      const buttonEl = ReactDOM.findDOMNode(button);
+
+      switch(focusState) {
+        case 'none':
+          buttonEl.blur();
+          break;
+        case 'focused':
+          buttonEl.focus();
+          break;
+        case 'keyboard-focused':
+          button.setKeyboardFocus();
+          buttonEl.focus();
+          break;
+      }
+    }
+  }
+
+
+  createDisabledElement(styles, contentChildren, additionalProps) {
+    const {
+      innerDivStyle,
+      style,
+    } = this.props;
+
+    const mergedDivStyles = Object.assign({},
+      styles.root,
+      styles.innerDiv,
+      innerDivStyle,
+      style
+    );
+
+    return (
+      <div 
+        {...additionalProps}
+        style={this.context.muiTheme.prepareStyles(mergedDivStyles)}
+      >
+        {contentChildren}
+      </div>
+    );
+  }
 
 
   createTextElement(styles, data, key) {
@@ -354,6 +397,15 @@ class ListItem extends Component {
     const styles = getStyles(this.props, this.context, this.state);
 
     const contentChildren = [children];
+
+
+    if (leftAvatar) {
+      this.pushElement(
+        contentChildren,
+        leftAvatar,
+        Object.assign({}, styles.avatars, styles.leftAvatar)
+      );
+    }
 
     const hasNestListItems = nestedItems.length;
     const hasRightElement = rightAvatar || rightIcon || rightIconButton || rightToggle;

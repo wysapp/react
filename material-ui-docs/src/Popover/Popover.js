@@ -101,7 +101,7 @@ class Popover extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {    
     this.setPlacement();
   }
   
@@ -167,6 +167,17 @@ class Popover extends Component {
     );
   }
 
+  requestClose(reason) {
+    if (this.props.onRequestClose) {
+      this.props.onRequestClose(reason);
+    }
+  }
+
+  componentClickAway = (event) => {
+    event.preventDefault();
+    this.requestClose('clickAway');
+  }
+
 
   getAnchorPosition(el) {
     if (!el) {
@@ -207,6 +218,7 @@ class Popover extends Component {
   }
 
   setPlacement = (scrolling) => {
+    
     if (!this.state.open) {
       return ;
     }
@@ -246,6 +258,16 @@ class Popover extends Component {
     }
 
 
+  }
+
+  autoCloseWhenOffScreen(anchorPosition) {
+    if (anchorPosition.top < 0 || 
+      anchorPosition.top > window.innerHeight ||
+      anchorPosition.left < 0 ||
+      anchorPosition.left > window.innerWidth 
+    )  {
+      this.requestClose('offScreen');
+    }
   }
 
 

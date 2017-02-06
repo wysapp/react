@@ -35,25 +35,80 @@ class IconButton extends Component {
   static muiName = 'IconButton';
 
   static propTypes = {
+    /**
+     * Can be used to pass a `FontIcon` element as the icon for the button.
+     */
     children: PropTypes.node,
+    /**
+     * The CSS class name of the root element.
+     */
     className: PropTypes.string,
+    /**
+     * If true, the element's ripple effect will be disabled.
+     */
     disableTouchRipple: PropTypes.bool,
+    /**
+     * If true, the element will be disabled.
+     */
     disabled: PropTypes.bool,
+    /**
+     * Override the inline-styles of the root element when the component is hovered.
+     */
     hoveredStyle: PropTypes.object,
+    /**
+     * The URL to link to when the button is clicked.
+     */
     href: PropTypes.string,
+    /**
+     * The CSS class name of the icon. Used for setting the icon with a stylesheet.
+     */
     iconClassName: PropTypes.string,
+    /**
+     * Override the inline-styles of the icon element.
+     * Note: you can specify iconHoverColor as a String inside this object.
+     */
     iconStyle: PropTypes.object,
+    /** @ignore */
     onBlur: PropTypes.func,
+    /** @ignore */
     onFocus: PropTypes.func,
+    /**
+     * Callback function fired when the element is focused or blurred by the keyboard.
+     *
+     * @param {object} event `focus` or `blur` event targeting the element.
+     * @param {boolean} keyboardFocused Indicates whether the element is focused.
+     */
     onKeyboardFocus: PropTypes.func,
+    /** @ignore */
     onMouseEnter: PropTypes.func,
+    /** @ignore */
     onMouseLeave: PropTypes.func,
+    /** @ignore */
     onMouseOut: PropTypes.func,
+    /** @ignore */
     onTouchStart: PropTypes.func,
+    /**
+     * Override the inline-styles of the root element.
+     */
     style: PropTypes.object,
+    /**
+     * The text to supply to the element's tooltip.
+     */
     tooltip: PropTypes.node,
+    /**
+     * The vertical and horizontal positions, respectively, of the element's tooltip.
+     * Possible values are: "bottom-center", "top-center", "bottom-right", "top-right",
+     * "bottom-left", and "top-left".
+     */
     tooltipPosition: propTypes.cornersAndCenter,
+    /**
+     * Override the inline-styles of the tooltip element.
+     */
     tooltipStyles: PropTypes.object,
+    /**
+     * If true, increase the tooltip element's size. Useful for increasing tooltip
+     * readability on mobile devices.
+     */
     touch: PropTypes.bool,
   };
 

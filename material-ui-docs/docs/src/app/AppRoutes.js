@@ -19,6 +19,15 @@ import Themes from './components/pages/customization/Themes';
 import Styles from './components/pages/customization/Styles';
 
 import AppBarPage from './components/pages/components/AppBar/Page';
+import AutoCompletesPage from './components/pages/components/AutoComplete/Page';
+import AvatarPage from './components/pages/components/Avatar/Page';
+import FlatButtonPage from './components/pages/components/FlatButton/Page';
+
+import RaisedButtonPage from './components/pages/components/RaisedButton/Page';
+
+import FloatingActionButtongPage from './components/pages/components/FloatingActionButton/Page';
+
+import IconButtonPage from './components/pages/components/IconButton/Page';
 
 import Community from './components/pages/discover-more/Community';
 import Contributing from './components/pages/discover-more/Contributing';
@@ -49,6 +58,15 @@ const AppRoutes = (
     <Redirect from="components" to="/components/app-bar" />
     <Route path="components">
       <Route path="app-bar" component={AppBarPage} />
+      <Route path="auto-complete" component={AutoCompletesPage} />
+      <Route path="avatar" component={AvatarPage} />
+
+      <Route path="flat-button" component={FlatButtonPage} /> 
+      <Route path="floating-action-button" component={FloatingActionButtongPage} /> 
+      <Route path="raised-button" component={RaisedButtonPage} />    
+      <Route path="icon-button" component={IconButtonPage} />
+      
+
     </Route>
 
     <Redirect from="discover-more" to="/discover-more/community" />

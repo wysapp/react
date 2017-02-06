@@ -17,28 +17,84 @@ class FlatButton extends Component {
   static muiName = 'FlatButton';
   
   static propTypes = {
+    /**
+     * Color of button when mouse is not hovering over it.
+     */
     backgroundColor: PropTypes.string,
+    /**
+     * This is what will be displayed inside the button.
+     * If a label is specified, the text within the label prop will
+     * be displayed. Otherwise, the component will expect children
+     * which will then be displayed. (In our example,
+     * we are nesting an `<input type="file" />` and a `span`
+     * that acts as our label to be displayed.) This only
+     * applies to flat and raised buttons.
+     */
     children: PropTypes.node,
+    /**
+     * Disables the button if set to true.
+     */
     disabled: PropTypes.bool,
+    /**
+     * Color of button when mouse hovers over.
+     */
     hoverColor: PropTypes.string,
+    /**
+     * The URL to link to when the button is clicked.
+     */
     href: PropTypes.string,
+    /**
+     * Use this property to display an icon.
+     */
     icon: PropTypes.node,
+    /**
+     * Label for the button.
+     */
     label: validateLabel,
+    /**
+     * Place label before or after the passed children.
+     */
     labelPosition: PropTypes.oneOf([
       'before',
       'after',
     ]),
+    /**
+     * Override the inline-styles of the button's label element.
+     */
     labelStyle: PropTypes.object,
-
+    /**
+     * Callback function fired when the element is focused or blurred by the keyboard.
+     *
+     * @param {object} event `focus` or `blur` event targeting the element.
+     * @param {boolean} isKeyboardFocused Indicates whether the element is focused.
+     */
     onKeyboardFocus: PropTypes.func,
+    /** @ignore */
     onMouseEnter: PropTypes.func,
+    /** @ignore */
     onMouseLeave: PropTypes.func,
+    /** @ignore */
     onTouchStart: PropTypes.func,
+    /**
+     * If true, colors button according to
+     * primaryTextColor from the Theme.
+     */
     primary: PropTypes.bool,
+    /**
+     * Color for the ripple after button is clicked.
+     */
     rippleColor: PropTypes.string,
+    /**
+     * If true, colors button according to secondaryTextColor from the theme.
+     * The primary prop has precendent if set to true.
+     */
     secondary: PropTypes.bool,
+    /**
+     * Override the inline-styles of the root element.
+     */
     style: PropTypes.object,
   };
+
 
   static defaultProps = {
     disabled: false,
@@ -61,6 +117,34 @@ class FlatButton extends Component {
     isKeyboardFocused: false,
     touch: false,
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.disabled) {
+      this.setState({
+        hovered: false,
+      });
+    }
+  }
+
+  handleKeyboardFocus = (event, isKeyboardFocused) => {
+    this.setState({isKeyboardFocused: isKeyboardFocused});
+    this.props.onKeyboardFocus(event, isKeyboardFocused);
+  }
+
+  handleMouseEnter = (event) =>{
+    if (!this.state.touch) this.setState({hovered: true});
+    this.props.onMouseEnter(event);
+  }
+
+  handleMouseLeave = (event) => {
+    this.setState({hovered: false});
+    this.props.onMouseLeave(event);
+  }
+
+  handleTouchStart = (event) => {
+    this.setState({touch: true});
+    this.props.onTouchStart(event);
+  }
 
   render() {
     const {

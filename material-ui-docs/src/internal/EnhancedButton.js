@@ -189,6 +189,7 @@ class EnhancedButton extends Component {
 
 
   handleKeyDown = (event) => {
+    
     if (!this.props.disabled && !this.props.disableKeyboardFocus) {
       if (keycode(event) === 'enter' && this.state.isKeyboardFocused) {
         this.handleTouchTap(event);
@@ -346,6 +347,7 @@ class EnhancedButton extends Component {
     if (!href && containerElement === 'button') {
       buttonProps.type = type;
     }
+
     
     return React.createElement(href ? 'a' : containerElement, buttonProps, buttonChildren);
   }

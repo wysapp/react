@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-
+import ReactDOM from 'react-dom';
+import shallowEqual from 'recompose/shallowEqual';
 import ListItem from '../List/ListItem';
 
 
@@ -90,6 +91,48 @@ class MenuItem extends Component {
     open: false,
   };
 
+  componentDidMount() {
+    this.applyFocusState();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.open && nextProps.focusState === 'none') {
+      this.handleRequestClose();
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return (
+      !shallowEqual(this.props, nextProps) ||
+      !shallowEqual(this.state, nextState) ||
+      !shallowEqual(this.context, nextContext)
+    );
+  }
+
+  componentDidUpdate() {
+    this.applyFocusState();
+  }
+
+  componentWillUnmount() {
+    if (this.state.open) {
+      this.setState({
+        open: false,
+      });
+    }
+  }
+
+  applyFocusState() {
+    
+    this.refs.listItem.applyFocusState(this.props.focusState);
+  }
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+      anchorEl: null,
+    });
+  }
+
   render() {
     const {
       checked,
@@ -122,6 +165,7 @@ class MenuItem extends Component {
         disabled={disabled}
         hoverColor={this.context.muiTheme.menuItem.hoverColor}
         innerDivStyle={mergedInnerDivStyles}
+        insetChildren={insetChildren}
         
         ref="listItem"
         

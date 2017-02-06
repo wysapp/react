@@ -202,6 +202,27 @@ class Menu extends Component {
     });
   }
 
+  decrementKeyboardFocusIndex(event) {
+    let index = this.state.focusIndex;
+
+    index--;
+    if(index < 0) index = 0;
+    
+    this.setFocusIndex(event, index, true);
+  }
+
+
+  getMenuItemCount(filteredChildren) {
+    let menuItemCount = 0;
+    filteredChildren.forEach((child) => {
+      const childIsAdivider = child.type && child.type.muiName === 'Divider';
+      const childIsDisabled = child.props.disabled;
+      if (!childIsAdivider && !childIsDisabled) menuItemCount++;
+    });
+
+    return menuItemCount;
+  }
+
   getSelectedIndex(props, filteredChildren) {
     let selectedIndex = -1;
     let menuItemIndex = 0;
@@ -214,6 +235,43 @@ class Menu extends Component {
     });
 
     return selectedIndex;
+  }
+
+  handleKeyDown = (event) => {
+    const filteredChildren = this.getFilteredChildren(this.props.children);
+    const key = keycode(event);
+    console.log('2222222222222222222222222-handleKeyDown', key);
+    switch(key) {
+      case 'down':
+        event.preventDefault();
+        this.incrementKeyboardFocusIndex(event, filteredChildren);
+        break;
+      case 'esc':
+        this.props.onEscKeyDown(event);
+        break;
+      case 'tab':
+        event.preventDefault();
+        if (event.shiftKey) {
+          this.decrementKeyboardFocusIndex(event);
+        } else {
+          this.incrementKeyboardFocusIndex(event, filteredChildren);
+        }
+        break;
+      case 'up':
+        event.preventDefault();
+        this.decrementKeyboardFocusIndex(event);
+        break;
+      default:
+      
+        if (key && key.length === 1) {
+          const hotKeys = this.hotKeyHolder.append(key);
+          if (this.setFocusIndexStartsWith(event, hotKeys)) {
+            event.preventDefault();
+          }
+        }
+    }
+
+    this.props.onKeyDown(event);
   }
 
   handleMenuItemTouchTap(event, item, index) {
@@ -241,6 +299,15 @@ class Menu extends Component {
     }
 
     this.props.onItemTouchTap(event, item, index);
+  }
+
+
+  incrementKeyboardFocusIndex(event, filteredChildren) {
+    let index = this.state.focusIndex;
+    const maxIndex = this.getMenuItemCount(filteredChildren) - 1;
+    index++;
+    if (index > maxIndex) index = maxIndex;
+    this.setFocusIndex(event, index, true);
   }
 
   isChildSelected(child, props){
@@ -278,6 +345,30 @@ class Menu extends Component {
       if (scrollTop < menuItemHeight) scrollTop = 0;
 
       ReactDOM.findDOMNode(this.refs.scrollContainer).scrollTop = scrollTop;
+    }
+  }
+
+  cancelScrollEvent(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
+  }
+
+  handleOnWheel = (event) => {
+    const scrollContainer = this.refs.scrollContainer;
+    
+    if (scrollContainer.scrollHeight <= scrollContainer.clientHeight) return;
+
+    const {scrollTop, scrollHeight, clientHeight} = scrollContainer;
+    const wheelDelta = event.deltaY;
+    const isDeltaPosition = wheelDelta > 0;
+
+    if (isDeltaPosition && wheelDelta > scrollHeight - clientHeight - scrollTop) {
+      scrollContainer.scrollTop = scrollHeight;
+      return this.cancelScrollEvent(event);
+    } else if(!isDeltaPosition && -wheelDelta > scrollTop) {
+      scrollContainer.scrollTop = 0;
+      return this.cancelScrollEvent(event);
     }
   }
 
@@ -325,7 +416,7 @@ class Menu extends Component {
     const styles = getStyles(this.props, this.context);
 
     const mergedRootStyles = Object.assign(styles.root, style);
-    const mergedListStyles = Object.assign(styles.root, listStyle);
+    const mergedListStyles = Object.assign(styles.list, listStyle);
 
     const filteredChildren = this.getFilteredChildren(children);
 

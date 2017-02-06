@@ -71,12 +71,30 @@ class IconMenu extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log('11111111111111111111-componentWillReceiveProps', nextProps);
+    
     if (nextProps.open !== null) {
       this.setState({
         open:nextProps.open,
         anchorEl: this.refs.iconMenuContainer,
       });
+    }
+  }
+
+  close(reason, isKeyboard) {
+    if(!this.state.open) {
+      return;
+    }
+
+    if (this.props.open !== null) {
+      this.props.onRequestChange(false, reason);
+    } else {
+      this.setState({open: false}, () => {
+        if (isKeyboard) {
+          const iconButton = this.refs.iconButton;
+          ReactDOM.findDOMNode(iconButton).focus();
+          iconButton.setKeyboardFocus();
+        }
+      })
     }
   }
 
@@ -99,14 +117,19 @@ class IconMenu extends Component {
     event.preventDefault();
   }
 
-  close(reason, isKeyboard) {
-    if(!this.state.open) {
-      return;
+  handleItemTouchTap = (event, child) => {
+    if (this.props.touchTapCloseDelay !== 0 && !child.props.hasOwnProperty('menuItems')) {
+      const isKeyboard = Events.isKeyboard(event);
+      this.timerClosed = setTimeout(() => {
+        this.close(isKeyboard ? 'enter' : 'itemTap', isKeyboard);
+      }, this.props.touchTapCloseDelay);
     }
 
-    if (this.props.open !== null) {
-      this.props.onRequestChange(false, reason);
-    }
+    this.props.onItemTouchTap(event, child);
+  }
+
+  handleRequestClose = (reason)=> {
+    this.close(reason);
   }
 
 
@@ -210,7 +233,8 @@ You should wrapped it with an <IconButton />.`);
           open={open}
           anchorEl={anchorEl}
           childContextTypes={this.constructor.childContextTypes}
-          useLayerForClickAway={this.handleRequestClose}
+          useLayerForClickAway={useLayerForClickAway}
+          onRequestClose={this.handleRequestClose}
           animated={animated}
           animation={animation}
           context={this.context}

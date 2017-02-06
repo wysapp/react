@@ -186,6 +186,16 @@ class AppNavDrawer extends Component {
                 href="#/components/auto-complete"
               />,
               <ListItem 
+                primaryText="Avatar"
+                value="/components/avatar"
+                href="#/components/avatar"
+              />,
+              <ListItem 
+                primaryText="Badge"
+                value="/components/badge"
+                href="#/components/badge"
+              />,
+              <ListItem 
                 primaryText="Buttons"
                 primaryTogglesNestedList={true}
                 nestedItems={[
