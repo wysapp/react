@@ -265,6 +265,7 @@ class Menu extends Component {
       
         if (key && key.length === 1) {
           const hotKeys = this.hotKeyHolder.append(key);
+          
           if (this.setFocusIndexStartsWith(event, hotKeys)) {
             event.preventDefault();
           }
@@ -272,6 +273,25 @@ class Menu extends Component {
     }
 
     this.props.onKeyDown(event);
+  }
+
+  setFocusIndexStartsWith(event, keys) {
+    let foundIndex = -1;
+    React.Children.forEach(this.props.children, (child, index) => {
+      if (foundIndex >= 0) {
+        return;
+      }
+      const {primaryText} = child.props;
+      if (typeof primaryText === 'string' && new RegExp(`^${keys}`, 'i').test(primaryText)) {
+        foundIndex = index;
+      }
+    });
+
+    if (foundIndex >= 0) {
+      this.setFocusIndex(event, foundIndex, true);
+      return true;
+    }
+    return false;
   }
 
   handleMenuItemTouchTap(event, item, index) {

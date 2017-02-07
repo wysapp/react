@@ -158,6 +158,16 @@ class MenuItem extends Component {
     const mergedInnerDivStyles = Object.assign(styles.innerDivStyle, innerDivStyle);
 
 
+    let secondaryTextElement;
+    if (secondaryText) {
+      const secondaryTextIsAnElement = React.isValidElement(secondaryText);
+      const mergedSecondaryTextStyles = secondaryTextIsAnElement ?
+        Object.assign(styles.secondaryText, secondaryText.props.style) : null;
+      
+      secondaryTextElement = secondaryTextIsAnElement ?
+        React.cloneElement(secondaryText, {style: mergedSecondaryTextStyles}) :
+        <div style={prepareStyles(styles.secondaryText)}>{secondaryText}</div>;
+    }
     
     return (
       <ListItem 
@@ -172,6 +182,7 @@ class MenuItem extends Component {
         style={mergedRootStyles}
       >
         {children}
+        {secondaryTextElement}
       </ListItem>
     );
   }

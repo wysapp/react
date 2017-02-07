@@ -26,6 +26,13 @@ export default class AutoCompleteExampleSimple extends Component {
           dataSource={this.state.dataSource}
           onUpdateInput={this.handleUpdateInput}
         />
+        <AutoComplete 
+          hintText="Type anything"
+          dataSource={this.state.dataSource}
+          onUpdateInput={this.handleUpdateInput}
+          floatingLabelText="Full width"
+          fullWidth={true}
+        />
       </div>
     )
   }

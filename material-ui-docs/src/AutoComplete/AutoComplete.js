@@ -146,6 +146,82 @@ class AutoComplete extends Component {
     }
   }
 
+  handleRequestClose = () => {
+    if (!this.state.focusTextField) {
+      this.close();
+    }
+  }
+
+
+  handleMouseDown = (event) => {
+    event.preventDefault();
+  }
+
+  handleItemTouchTap = (event, child) => {
+    const dataSource = this.props.dataSource;
+
+    const index = parseInt(child.key, 10);
+    const chosenRequest = dataSource[index];
+    const searchText = this.chosenRequestText(chosenRequest);
+
+    this.setState({
+      searchText: searchText,
+    }, () => {
+      this.props.onUpdateInput(searchText, this.props.dataSource, {
+        source: 'touchTap',
+      });
+
+      this.timerTouchTapCloseId = setTimeout(() => {
+        this.timerTouchTapCloseId = null;
+        this.close();
+        this.props.onNewRequest(chosenRequest, index);
+      }, this.props.menuCloseDelay);
+    });
+
+  }
+
+  chosenRequestText = (chosenRequest) => {
+    if (typeof chosenRequest === 'string') {
+      return chosenRequest;
+    } else {
+      return chosenRequest[this.props.dataSourceConfig.text];
+    }
+  }
+
+  handleEscKeyDown = () => {
+    this.close();
+  }
+
+  handleKeyDown = (event) => {
+    if (this.props.onKeyDown) this.props.onKeyDown(event);
+
+    switch(keycode(event)) {
+      case 'enter':
+        this.close();
+        const searchText = this.state.searchText;
+        if (searchText !== '') {
+          this.props.onNewRequest(searchText, -1);
+        }
+        break;
+      
+      case 'esc':
+        this.close();
+        break;
+      
+      case 'down':
+        event.preventDefault();
+        this.setState({
+          open: true,
+          focusTextField: false,
+          anchorEl: ReactDOM.findDOMNode(this.refs.searchTextField),
+        });
+        break;
+      
+      default:
+        break;
+    }
+  }
+
   handleChange = (event) => {
 
     const searchText = event.target.value;
@@ -355,5 +431,26 @@ class AutoComplete extends Component {
     );
   }
 }
+
+AutoComplete.noFilter = () => true;
+
+AutoComplete.caseInsensitiveFilter = (searchText, key) => {
+  return key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+};
+
+
+AutoComplete.fuzzyFilter = (searchText, key) => {
+  const compareString = key.toLowerCase();
+  searchText = searchText.toLowerCase();
+
+  let searchTextIndex = 0;
+  for (let index = 0; index < key.length; index++) {
+    if (compareString[index] === searchText[searchTextIndex]) {
+      searchTextIndex += 1;
+    }
+  }
+
+  return searchTextIndex === searchText.length;
+};
 
 export default AutoComplete;

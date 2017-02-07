@@ -218,9 +218,8 @@ class Popover extends Component {
   }
 
   setPlacement = (scrolling) => {
-    
     if (!this.state.open) {
-      return ;
+      return;
     }
 
     if (!this.refs.layer.getLayer()) {
@@ -248,17 +247,14 @@ class Popover extends Component {
     }
 
     if (this.props.canAutoPosition) {
-      target = this.getTargetPosition(targetEl);
-
-      targetPosition = this.applyAutoPositionIfNeeded(anchor,target, targetOrigin, anchorOrigin, targetPosition);
-
-      targetEl.style.top = `${Math.max(0, targetPosition.top)}px`;
-      targetEl.style.left = `${Math.max(0, targetPosition.left)}px`;
-      targetEl.style.maxHeight= `${window.innerHeight}px`;
+      target = this.getTargetPosition(targetEl); // update as height may have changed
+      targetPosition = this.applyAutoPositionIfNeeded(anchor, target, targetOrigin, anchorOrigin, targetPosition);
     }
 
-
-  }
+    targetEl.style.top = `${Math.max(0, targetPosition.top)}px`;
+    targetEl.style.left = `${Math.max(0, targetPosition.left)}px`;
+    targetEl.style.maxHeight = `${window.innerHeight}px`;
+  };
 
   autoCloseWhenOffScreen(anchorPosition) {
     if (anchorPosition.top < 0 || 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
 import transitions from '../styles/transitions';
 import TextFieldHint from './TextFieldHint';
+import TextFieldLabel from './TextFieldLabel';
 import TextFieldUnderline from './TextFieldUnderline';
 import warning from 'warning';
 
@@ -54,10 +55,10 @@ const getStyles = (props, context, state) => {
       color: props.disabled ? disabledTextColor : textColor,
       cursor: 'inherit',
       font: 'inherit',
-      WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+      WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated style).
     },
     inputNative: {
-      appearance: 'textfield',
+      appearance: 'textfield', // Improve type search style.
     },
   };
 
@@ -68,13 +69,14 @@ const getStyles = (props, context, state) => {
     font: 'inherit',
   });
 
+  // Do not assign a height to the textarea as he handles it on his own.
   styles.input.height = '100%';
-  
+
   if (state.isFocused) {
     styles.floatingLabel.color = focusColor;
   }
 
-  if(props.floatingLabelText) {
+  if (props.floatingLabelText) {
     styles.input.boxSizing = 'border-box';
 
     if (!props.multiLine) {
@@ -94,7 +96,6 @@ const getStyles = (props, context, state) => {
 
   return styles;
 };
-
 
 function isValid(value) {
   return value !== '' && value !== undefined && value !== null;
@@ -182,6 +183,36 @@ class TextField extends Component {
     this.uniqueId = uniqueId.replace(/[^A-Za-z0-9-]/gi, '');
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errorText !== this.props.errorText) {
+      this.setState({
+        errorText: nextProps.errorText,
+      });
+    }
+
+    if (nextProps.children && nextProps.children.props) {
+      nextProps = nextProps.children.props;
+    }
+
+    if (nextProps.hasOwnProperty('value')) {
+      const hasValue = isValid(nextProps.value);
+
+      this.setState({
+        hasValue: hasValue,
+      });
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return (
+      !shallowEqual(this.props, nextProps) ||
+      !shallowEqual(this.state, nextState) ||
+      !shallowEqual(this.context, nextContext)
+    );
+  }
+
+
+
   handleInputBlur = (event) => {
     this.setState({isFocused: false});
     if (this.props.onBlur) {
@@ -246,6 +277,23 @@ class TextField extends Component {
     const inputId = id || this.uniqueId;
 
 
+    const floatingLabelTextElement = floatingLabelText && (
+      <TextFieldLabel
+        muiTheme={this.context.muiTheme}
+        style={Object.assign(
+          styles.floatingLabel,
+          floatingLabelStyle,
+          this.state.isFocused ? floatingLabelFocusStyle : null
+        )}
+        shrinkStyle={floatingLabelShrinkStyle}
+        htmlFor={inputId}
+        shrink={this.state.hasValue || this.state.isFocused || floatingLabelFixed}
+        disabled={disabled}
+      >
+        {floatingLabelText}
+      </TextFieldLabel>
+    );
+
     const inputProps = {
       id: inputId,
       ref: (elem) => this.input = elem,
@@ -285,6 +333,7 @@ class TextField extends Component {
         className={className}
         style={prepareStyles(Object.assign(styles.root, style))}
       >
+        {floatingLabelTextElement}
         {hintText ? 
           <TextFieldHint
             muiTheme={this.context.muiTheme}

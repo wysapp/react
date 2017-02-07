@@ -60,7 +60,7 @@ class RenderToLayer extends Component {
     }
 
     if (this.props.useLayerForClickAway) {
-      this.layer.style.position = 'relation';
+      this.layer.style.position = 'relative';
       this.layer.removeEventListener('touchstart', this.onClickAway);
       this.layer.removeEventListener('click', this.onClickAway);
     } else {
