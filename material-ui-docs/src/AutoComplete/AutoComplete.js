@@ -112,6 +112,88 @@ class AutoComplete extends Component {
     searchText: undefined,
   };
 
+  componentWillMount() {
+    this.requestsList = [];
+    this.setState({
+      open: this.props.open,
+      searchText: this.props.searchText,
+    });
+    this.timerTouchTapCloseId = null;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('1111111111111111111-componentWillReceiveProps', nextProps);
+    if (this.props.searchText !== nextProps.searchText) {
+      this.setState({
+        searchText: nextProps.searchText,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerTouchTapCloseId);
+    clearTimeout(this.timerBlurClose);
+  }
+
+  close() {
+    this.setState({
+      open: false,
+      anchorEl: null,
+    });
+
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
+  }
+
+  handleChange = (event) => {
+
+    const searchText = event.target.value;
+    if (searchText === this.state.searchText) {
+      return;
+    }
+
+    this.setState({
+      searchText: searchText,
+      open: true,
+      anchorEl: ReactDOM.findDOMNode(this.refs.searchTextField),
+    }, () => {
+      this.props.onUpdateInput(searchText, this.props.dataSource, {
+        source: 'change',
+      });
+    });
+  }
+
+  handleBlur = (event) => {
+    
+    if (this.state.focusTextField && this.timerTouchTapCloseId === null) {
+      this.timerBlurClose = setTimeout(() => {
+        this.close();
+      }, 0);
+    }
+
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+  }
+
+  handleFocus = (event) => {
+    if (!this.state.open && this.props.openOnFocus) {
+      this.setState({
+        open: true,
+        anchorEl: ReactDOM.findDOMNode(this.refs.searchTextField),
+      });
+    }
+
+    this.setState({
+      focusTextField: true,
+    })
+
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  }
+
   render() {
 
     const {
@@ -158,6 +240,84 @@ class AutoComplete extends Component {
     const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context, this.state);
 
+    const requestsList = [];
+
+    dataSource.every((item, index) => {
+      switch(typeof item) {
+        case 'string':
+          if (filter(searchText, item, item)) {
+            requestsList.push({
+              text: item,
+              value: (
+                <MenuItem 
+                  innerDivStyle={styles.innerDiv}
+                  value={item}
+                  primaryText={item}
+                  disableFocusRipple={disableFocusRipple}
+                  key={index}
+                />
+              ),
+            });
+          }
+
+          break;
+        
+        case 'object':
+          if (item && typeof item[this.props.dataSourceConfig.text] === 'string') {
+            const itemText = item[this.props.dataSourceConfig.text];
+            if (!this.props.filter(searchText, itemText, item)) break;
+
+            const itemValue = item[this.props.dataSourceConfig.value];
+            if (itemValue.type && (itemValue.type.muiName === MenuItem.muiName || itemValue.type.muiName === Divider.muiName)) {
+              requestsList.push({
+                text: itemText,
+                value: React.cloneElement(itemValue, {
+                  key: index,
+                  disableFocusRipple: disableFocusRipple,
+                }),
+              });
+            } else {
+              requestsList.push({
+                text: itemText,
+                value: (
+                  <MenuItem 
+                    innerDivStyle={styles.innerDiv}
+                    primaryText={itemText}
+                    disableFocusRipple={disableFocusRipple}
+                    key={index}
+                  />
+                ),
+              });
+            }
+          }
+
+          break;
+        default:
+      }
+
+      return !(maxSearchResults && maxSearchResults > 0 && requestsList.length === maxSearchResults);
+    })
+
+    this.requestsList = requestsList;
+
+    const menu = open && requestsList.length > 0 && (
+      <Menu 
+        {...menuProps}
+        ref="menu"
+        autoWidth={false}
+        disableAutoFocus={focusTextField}
+        onEscKeyDown={this.handleEscKeyDown}
+        initiallyKeyboardFocused={true}
+        onItemTouchTap={this.handleItemTouchTap}
+        onMouseDown={this.handleMouseDown}
+        style={Object.assign(styles.menu, menuStyle)}
+        listStyle={Object.assign(styles.list, listStyle)}
+      >
+        {requestsList.map((i) => i.value)}
+      </Menu>
+    );
+
+
     return (
       <div style={prepareStyles(Object.assign(styles.root, style))}>
         <TextField
@@ -176,10 +336,23 @@ class AutoComplete extends Component {
           errorStyle={errorStyle}
           style={textFieldStyle}
         />
+        <Popover 
+          style={Object.assign({}, styles.popover, popoverStyle)}
+          canAutoPosition={false}
+          anchorOrigin={anchorOrigin}
+          targetOrigin={targetOrigin}
+          open={open}
+          anchorEl={anchorEl}
+          useLayerForClickAway={false}
+          onRequestClose={this.handleRequestClose}
+          animated={animated}
+          animation={animation}
+          {...popoverOther}
+        >
+          {menu}
+        </Popover>
       </div>
     );
-
-
   }
 }
 

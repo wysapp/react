@@ -7,6 +7,16 @@ export default class AutoCompleteExampleSimple extends Component {
     dataSource: [],
   };
 
+  handleUpdateInput = (value) => {
+    this.setState({
+      dataSource: [
+        value,
+        value + value,
+        value + value + value,
+      ],
+    });
+  }
+
 
   render() {
     return (
@@ -14,6 +24,7 @@ export default class AutoCompleteExampleSimple extends Component {
         <AutoComplete
           hintText="Type anything"
           dataSource={this.state.dataSource}
+          onUpdateInput={this.handleUpdateInput}
         />
       </div>
     )

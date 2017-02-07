@@ -2,6 +2,8 @@ import React, {Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
 import transitions from '../styles/transitions';
+import TextFieldHint from './TextFieldHint';
+import TextFieldUnderline from './TextFieldUnderline';
 import warning from 'warning';
 
 const getStyles = (props, context, state) => {
@@ -180,6 +182,31 @@ class TextField extends Component {
     this.uniqueId = uniqueId.replace(/[^A-Za-z0-9-]/gi, '');
   }
 
+  handleInputBlur = (event) => {
+    this.setState({isFocused: false});
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+  }
+
+  handleInputChange = (event) => {
+    this.setState({hasValue: isValid(event.target.value)});
+    if (this.props.onChange) {
+      this.props.onChange(event, event.target.value);
+    }
+  }
+
+  handleInputFocus = (event) => {
+    if (this.props.disabled) {
+      return;
+    }
+
+    this.setState({isFocused: true});
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  }
+
   render() {
 
     const {
@@ -258,7 +285,30 @@ class TextField extends Component {
         className={className}
         style={prepareStyles(Object.assign(styles.root, style))}
       >
+        {hintText ? 
+          <TextFieldHint
+            muiTheme={this.context.muiTheme}
+            show={!(this.state.hasValue || (floatingLabelText && !this.state.isFocused)) ||
+                  (!this.state.hasValue && floatingLabelText && floatingLabelFixed && !this.state.isFocused)}
+            style={hintStyle}
+            text={hintText}
+          /> : 
+          null
+        }
         {inputElement}
+        {underlineShow ?
+          <TextFieldUnderline
+            disabled={disabled}
+            disabledStyle={underlineDisabledStyle}
+            error={!!this.state.errorText}
+            errorStyle={errorStyle}
+            focus={this.state.isFocused}
+            focusStyle={underlineFocusStyle}
+            muiTheme={this.context.muiTheme}
+            style={underlineStyle}
+          /> :
+          null
+        }
       </div>
     );
 
