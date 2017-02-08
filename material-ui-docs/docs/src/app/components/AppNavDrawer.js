@@ -196,6 +196,11 @@ class AppNavDrawer extends Component {
                 href="#/components/badge"
               />,
               <ListItem 
+                primaryText="Bottom Navigation"
+                value="/components/bottom-navigation"
+                href="#/components/bottom-navigation"
+              />,
+              <ListItem 
                 primaryText="Buttons"
                 primaryTogglesNestedList={true}
                 nestedItems={[
@@ -220,6 +225,62 @@ class AppNavDrawer extends Component {
                     href="#/components/icon-button"
                   />,
                 ]}
+              />,
+              <ListItem
+                primaryText="Card"
+                value="/components/card"
+                href="#/components/card"
+              />,
+              <ListItem
+                primaryText="Chip"
+                value="/components/chip"
+                href="#/components/chip"
+              />,
+              <ListItem
+                primaryText="Date Picker"
+                value="/components/date-picker"
+                href="#/components/date-picker"
+              />,
+              <ListItem
+                primaryText="Dialog"
+                value="/components/dialog"
+                href="#/components/dialog"
+              />,
+              <ListItem
+                primaryText="Divider"
+                value="/components/divider"
+                href="#/components/divider"
+              />,
+              <ListItem
+                primaryText="Drawer"
+                value="/components/drawer"
+                href="#/components/drawer"
+              />,
+              <ListItem
+                primaryText="Grid List"
+                value="/components/grid-list"
+                href="#/components/grid-list"
+              />,
+              <ListItem
+                primaryText="Icons"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem
+                    primaryText="Font Icon"
+                    value="/components/font-icon"
+                    href="#/components/font-icon"
+                  />,
+                  <ListItem
+                    primaryText="SVG Icon"
+                    value="/components/svg-icon"
+                    href="#/components/svg-icon"
+                  />
+                ]}
+              />,
+              <ListItem
+                primaryText="List"
+                value="/components/list"
+                href="#/components/list"
               />,
             ]}
           />

@@ -21,6 +21,11 @@ import Styles from './components/pages/customization/Styles';
 import AppBarPage from './components/pages/components/AppBar/Page';
 import AutoCompletesPage from './components/pages/components/AutoComplete/Page';
 import AvatarPage from './components/pages/components/Avatar/Page';
+import BadgePage from './components/pages/components/Badge/Page';
+import BottomNavigationPage from './components/pages/components/BottomNavigation/Page';
+
+import DividerPage from './components/pages/components/Divider/Page';
+
 import FlatButtonPage from './components/pages/components/FlatButton/Page';
 
 import RaisedButtonPage from './components/pages/components/RaisedButton/Page';
@@ -60,6 +65,11 @@ const AppRoutes = (
       <Route path="app-bar" component={AppBarPage} />
       <Route path="auto-complete" component={AutoCompletesPage} />
       <Route path="avatar" component={AvatarPage} />
+
+      <Route path="badge" component={BadgePage} />
+      <Route path="bottom-navigation" component={BottomNavigationPage} />
+
+      <Route path="divider" component={DividerPage} />
 
       <Route path="flat-button" component={FlatButtonPage} /> 
       <Route path="floating-action-button" component={FloatingActionButtongPage} /> 
