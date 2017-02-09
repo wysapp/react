@@ -34,6 +34,8 @@ import FloatingActionButtongPage from './components/pages/components/FloatingAct
 
 import IconButtonPage from './components/pages/components/IconButton/Page';
 
+import CardPage from './components/pages/components/Card/Page';
+
 import Community from './components/pages/discover-more/Community';
 import Contributing from './components/pages/discover-more/Contributing';
 import Showcase from './components/pages/discover-more/Showcase';
@@ -76,6 +78,7 @@ const AppRoutes = (
       <Route path="raised-button" component={RaisedButtonPage} />    
       <Route path="icon-button" component={IconButtonPage} />
       
+      <Route path="card" component={CardPage} />
 
     </Route>
 

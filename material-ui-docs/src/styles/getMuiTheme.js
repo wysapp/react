@@ -66,6 +66,23 @@ export default function getMuiTheme(muiTheme, ...more) {
       iconButtonSize: spacing.iconSize * 2,
     },
 
+    card: {
+      titleColor: fade(palette.textColor, 0.87),
+      subtitleColor: fade(palette.textColor, 0.54),
+      fontWeight: typography.fontWeightMedium,
+    },
+
+    cardMedia: {
+      color: darkWhite,
+      overlayContentBackground: lightBlack,
+      titleColor: darkWhite,
+      subtitleColor: lightWhite,
+    },
+
+    cardText: {
+      textColor: palette.textColor,
+    },
+
     checkbox: {
       boxColor: palette.textColor,
       checkedColor: palette.primary1Color,
