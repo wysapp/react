@@ -36,6 +36,15 @@ import IconButtonPage from './components/pages/components/IconButton/Page';
 
 import CardPage from './components/pages/components/Card/Page';
 
+import GridListPage from './components/pages/components/GridList/Page';
+
+import CircularProgressPage from './components/pages/components/CircularProgress/Page';
+
+import SliderPage from './components/pages/components/Slider/Page';
+import StepperPage from './components/pages/components/Stepper/Page';
+import TablePage from './components/pages/components/Table/Page';
+import TabsPage from './components/pages/components/Tabs/Page';
+import ToolbarPage from './components/pages/components/Toolbar/Page';
 import Community from './components/pages/discover-more/Community';
 import Contributing from './components/pages/discover-more/Contributing';
 import Showcase from './components/pages/discover-more/Showcase';
@@ -80,6 +89,16 @@ const AppRoutes = (
       
       <Route path="card" component={CardPage} />
 
+      <Route path="grid-list" component={GridListPage} />
+
+      <Route path="circular-progress" component={CircularProgressPage} />
+
+
+      <Route path="slider" component={SliderPage} />
+      <Route path="stepper" component={StepperPage} />
+      <Route path="table" component={TablePage} />
+      <Route path="tabs" component={TabsPage} />
+      <Route path="toolbar" component={ToolbarPage} />
     </Route>
 
     <Redirect from="discover-more" to="/discover-more/community" />

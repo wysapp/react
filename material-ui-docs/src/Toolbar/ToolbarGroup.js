@@ -78,6 +78,13 @@ class ToolbarGroup extends Component {
     muiTheme: PropTypes.object.isRequired,
   };
 
+  handleMouseLeaveFontIcon(style) {
+    return (event) => {
+      event.target.style.zIndex = 'auto';
+      event.target.style.color = style.root.color;
+    };
+  }
+
   render() {
     const {
       children,

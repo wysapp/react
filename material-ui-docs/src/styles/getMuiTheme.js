@@ -212,13 +212,66 @@ export default function getMuiTheme(muiTheme, ...more) {
       color: fade(palette.textColor, 0.87),
     },
 
+    slider: {
+      trackSize: 2,
+      trackColor: palette.primary3Color,
+      trackColorSelected: palette.accent3Color,
+      handleSize: 12,
+      handleSizeDisabled: 8,
+      handleSizeActive: 18,
+      handleColorZero: palette.primary3Color,
+      handleFillColor: palette.alternateTextColor,
+      selectionColor: palette.primary1Color,
+      rippleColor: palette.primary1Color,
+    },
+
     subheader: {
       color: fade(palette.textColor, 0.54),
       fontWeight: typography.fontWeightMedium,
     },
 
+    stepper: {
+      backgroundColor: 'transparent',
+      hoverBackgroundColor: fade(black, 0.06),
+      iconColor: palette.primary1Color,
+      hoveredIconColor: grey700,
+      inactiveIconColor: grey700,
+      textColor: fade(black, 0.87),
+      disabledTextColor: fade(black, 0.26),
+      connectorLineColor: grey400,
+    },
+
     svgIcon: {
       color: palette.textColor,
+    },
+
+    
+    table: {
+      backgroundColor: palette.canvasColor,
+    },
+    tableFooter: {
+      borderColor: palette.borderColor,
+      textColor: palette.accent3Color,
+    },
+    tableHeader: {
+      borderColor: palette.borderColor,
+    },
+    tableHeaderColumn: {
+      textColor: palette.accent3Color,
+      height: 56,
+      spacing: 24,
+    },
+    tableRow: {
+      hoverColor: palette.accent2Color,
+      stripeColor: fade(lighten(palette.primary1Color, 0.5), 0.4),
+      selectedColor: palette.borderColor,
+      textColor: palette.textColor,
+      borderColor: palette.borderColor,
+      height: 48,
+    },
+    tableRowColumn: {
+      height: 48,
+      spacing: 24,
     },
 
     tabs: {

@@ -10,7 +10,7 @@ class CodeExample extends Component {
     code: PropTypes.string.isRequired,
     component: PropTypes.bool,
     description: PropTypes.string,
-    exampleBlockStyle: PropTypes.bool,
+    exampleBlockStyle: PropTypes.object,
     layoutSideBySide: PropTypes.bool,
     title: PropTypes.string,
   };
