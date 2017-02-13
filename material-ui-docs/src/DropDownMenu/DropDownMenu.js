@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import transitions from '../styles/transitions';
 import DropDownArrow from '../svg-icons/navigation/arrow-drop-down';
@@ -31,7 +31,7 @@ function getStyles(props, context) {
       fill: accentColor,
       position: 'absolute',
       right: spacing.desktopGutterLess,
-      top: ((spacing.desktopToolbarHeight - 24) / 2),
+      top: (spacing.iconSize - 24) / 2 + spacing.desktopGutterMini / 2,
     },
     iconChildren: {
       fill: 'inherit',
@@ -43,9 +43,7 @@ function getStyles(props, context) {
       opacity: 1,
       position: 'relative',
       paddingLeft: spacing.desktopGutter,
-      paddingRight: spacing.iconSize +
-      spacing.desktopGutterLess +
-      spacing.desktopGutterMini,
+      paddingRight: spacing.iconSize * 2 + spacing.desktopGutterMini,
       textOverflow: 'ellipsis',
       top: 0,
       whiteSpace: 'nowrap',
@@ -80,26 +78,94 @@ function getStyles(props, context) {
 class DropDownMenu extends Component {
   static muiName = 'DropDownMenu';
 
+  // The nested styles for drop-down-menu are modified by toolbar and possibly
+  // other user components, so it will give full access to its js styles rather
+  // than just the parent.
   static propTypes = {
+    /**
+     * If true, the popover will apply transitions when
+     * it gets added to the DOM.
+     */
     animated: PropTypes.bool,
+    /**
+     * Override the default animation component used.
+     */
     animation: PropTypes.func,
+    /**
+     * The width will automatically be set according to the items inside the menu.
+     * To control this width in css instead, set this prop to `false`.
+     */
     autoWidth: PropTypes.bool,
+    /**
+     * The `MenuItem`s to populate the `Menu` with. If the `MenuItems` have the
+     * prop `label` that value will be used to render the representation of that
+     * item within the field.
+     */
     children: PropTypes.node,
+    /**
+     * The css class name of the root element.
+     */
     className: PropTypes.string,
+    /**
+     * Disables the menu.
+     */
     disabled: PropTypes.bool,
+    /**
+     * Overrides the styles of icon element.
+     */
     iconStyle: PropTypes.object,
+    /**
+     * Overrides the styles of label when the `DropDownMenu` is inactive.
+     */
     labelStyle: PropTypes.object,
+    /**
+     * The style object to use to override underlying list style.
+     */
     listStyle: PropTypes.object,
+    /**
+     * The maximum height of the `Menu` when it is displayed.
+     */
     maxHeight: PropTypes.number,
+    /**
+     * Override the inline-styles of menu items.
+     */
     menuItemStyle: PropTypes.object,
+    /**
+     * Overrides the styles of `Menu` when the `DropDownMenu` is displayed.
+     */
     menuStyle: PropTypes.object,
+    /**
+     * Callback function fired when a menu item is clicked, other than the one currently selected.
+     *
+     * @param {object} event TouchTap event targeting the menu item that was clicked.
+     * @param {number} key The index of the clicked menu item in the `children` collection.
+     * @param {any} payload The `value` prop of the clicked menu item.
+     */
     onChange: PropTypes.func,
+    /**
+     * Callback function fired when the menu is closed.
+     */
     onClose: PropTypes.func,
+    /**
+     * Set to true to have the `DropDownMenu` automatically open on mount.
+     */
     openImmediately: PropTypes.bool,
+    /**
+     * Override the inline-styles of selected menu items.
+     */
     selectedMenuItemStyle: PropTypes.object,
+    /**
+     * Override the inline-styles of the root element.
+     */
     style: PropTypes.object,
+    /**
+     * Overrides the inline-styles of the underline.
+     */
     underlineStyle: PropTypes.object,
-    value: PropTypes.any, 
+    /**
+     * The value that is currently selected.
+     */
+    value: PropTypes.any,
   };
 
   static defaultProps = {
@@ -142,6 +208,25 @@ class DropDownMenu extends Component {
   rootNode = undefined;
   arrowNode = undefined;
 
+  /**
+   * This method is deprecated but still here because the TextField
+   * need it in order to work. TODO: That will be addressed later.
+   */
+  getInputNode() {
+    const rootNode = this.rootNode;
+
+    rootNode.focus = () => {
+      if (!this.props.disabled) {
+        this.setState({
+          open: !this.state.open,
+          anchorEl: this.rootNode,
+        });
+      }
+    };
+
+    return rootNode;
+  }
+
   setWidth() {
     const el = this.rootNode;
     if (!this.props.style || !this.props.style.hasOwnProperty('width')) {
@@ -150,7 +235,6 @@ class DropDownMenu extends Component {
   }
 
   handleTouchTapControl = (event) => {
-    
     event.preventDefault();
     if (!this.props.disabled) {
       this.setState({
@@ -160,17 +244,16 @@ class DropDownMenu extends Component {
     }
   };
 
-
   handleRequestCloseMenu = () => {
     this.close(false);
-  }
+  };
 
   handleEscKeyDownMenu = () => {
     this.close(true);
-  }
+  };
 
   handleKeyDown = (event) => {
-    switch(keycode(event)) {
+    switch (keycode(event)) {
       case 'up':
       case 'down':
       case 'space':
@@ -182,7 +265,7 @@ class DropDownMenu extends Component {
         });
         break;
     }
-  }
+  };
 
   handleItemTouchTap = (event, child, index) => {
     event.persist();
@@ -211,7 +294,7 @@ class DropDownMenu extends Component {
         dropNode.focus();
         dropArrow.setKeyboardFocus(true);
       }
-    })
+    });
   }
 
   render() {
@@ -226,8 +309,8 @@ class DropDownMenu extends Component {
       listStyle,
       maxHeight,
       menuStyle: menuStyleProp,
-      onClose,
-      openImmediately,
+      onClose, // eslint-disable-line no-unused-vars
+      openImmediately, // eslint-disable-line no-unused-vars
       menuItemStyle,
       selectedMenuItemStyle,
       style,
@@ -241,12 +324,13 @@ class DropDownMenu extends Component {
       open,
     } = this.state;
 
-    const { prepareStyles } = this.context.muiTheme;
+    const {prepareStyles} = this.context.muiTheme;
     const styles = getStyles(this.props, this.context);
 
     let displayValue = '';
     React.Children.forEach(children, (child) => {
-      if ( child && value === child.props.value) {
+      if (child && value === child.props.value) {
+        // This will need to be improved (in case primaryText is a node)
         displayValue = child.props.label || child.props.primaryText;
       }
     });
@@ -261,7 +345,7 @@ class DropDownMenu extends Component {
     }
 
     return (
-      <div 
+      <div
         {...other}
         ref={(node) => {
           this.rootNode = node;
@@ -270,12 +354,10 @@ class DropDownMenu extends Component {
         style={prepareStyles(Object.assign({}, styles.root, open && styles.rootWhenOpen, style))}
       >
         <ClearFix style={styles.control} onTouchTap={this.handleTouchTapControl}>
-          <div 
-            style={prepareStyles(Object.assign({}, styles.label, open && styles.labelWhenOpen, labelStyle))}>
+          <div style={prepareStyles(Object.assign({}, styles.label, open && styles.labelWhenOpen, labelStyle))}>
             {displayValue}
           </div>
-          
-          <IconButton 
+          <IconButton
             tabIndex={this.props.disabled ? -1 : undefined}
             onKeyDown={this.handleKeyDown}
             ref={(node) => {
@@ -288,7 +370,7 @@ class DropDownMenu extends Component {
           </IconButton>
           <div style={prepareStyles(Object.assign({}, styles.underline, underlineStyle))} />
         </ClearFix>
-        <Popover 
+        <Popover
           anchorOrigin={anchorOrigin}
           anchorEl={anchorEl}
           animation={animation || PopoverAnimationVertical}
@@ -296,7 +378,7 @@ class DropDownMenu extends Component {
           animated={animated}
           onRequestClose={this.handleRequestCloseMenu}
         >
-          <Menu 
+          <Menu
             maxHeight={maxHeight}
             desktop={true}
             value={value}

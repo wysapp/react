@@ -38,6 +38,9 @@ import CardPage from './components/pages/components/Card/Page';
 
 import GridListPage from './components/pages/components/GridList/Page';
 import ListPage from './components/pages/components/List/Page';
+import MenuPage from './components/pages/components/Menu/Page';
+import IconMenuPage from './components/pages/components/IconMenu/Page';
+import DropDownMenuPage from './components/pages/components/DropDownMenu/Page';
 import CircularProgressPage from './components/pages/components/CircularProgress/Page';
 
 import SliderPage from './components/pages/components/Slider/Page';
@@ -92,6 +95,9 @@ const AppRoutes = (
 
       <Route path="grid-list" component={GridListPage} />
       <Route path="list" component={ListPage} />
+      <Route path="menu" component={MenuPage} />
+      <Route path="icon-menu" component={IconMenuPage} />
+      <Route path="dropdown-menu" component={DropDownMenuPage} />
       <Route path="circular-progress" component={CircularProgressPage} />
 
 

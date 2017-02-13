@@ -1,8 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import shallowEqual from 'recompose/shallowEqual';
+import Popover from '../Popover/Popover';
+import CheckIcon from '../svg-icons/navigation/check';
 import ListItem from '../List/ListItem';
+import Menu from '../Menu/Menu';
 
+const nestedMenuStyle = {
+  position: 'relative',
+};
 
 function getStyles(props, context) {
   const disabledColor = context.muiTheme.baseTheme.palette.disabledColor;
@@ -126,6 +132,33 @@ class MenuItem extends Component {
     this.refs.listItem.applyFocusState(this.props.focusState);
   }
 
+  cloneMenuItem = (item) => {
+    return React.cloneElement(item, {
+      onTouchTap: (event) => {
+        if(!item.props.menuItems) {
+          this.handleRequestClose();
+        }
+
+        if (item.props.onTouchTap) {
+          this.props.onTouchTap(event);
+        }
+      }
+    })
+  }
+
+  handleTouchTap = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: ReactDOM.findDOMNode(this),
+    });
+
+    if (this.props.onTouchTap) {
+      this.props.onTouchTap(event);
+    }
+  }
+
   handleRequestClose = () => {
     this.setState({
       open: false,
@@ -157,6 +190,21 @@ class MenuItem extends Component {
     const mergedRootStyles = Object.assign(styles.root, style);
     const mergedInnerDivStyles = Object.assign(styles.innerDivStyle, innerDivStyle);
 
+    let leftIconElement = leftIcon ? leftIcon : checked ? <CheckIcon /> : null;
+    if (leftIconElement) {
+      const mergedLeftIconStyles = desktop ?
+        Object.assign(styles.leftIconDesktop, leftIconElement.props.style) :
+        leftIconElement.props.style;
+      leftIconElement = React.cloneElement(leftIconElement, {style: mergedLeftIconStyles});
+    }
+
+    let rightIconElement;
+    if (rightIcon) {
+      const mergedRightIconStyles = desktop ?
+        Object.assign(styles.rightIconDesktop, rightIcon.props.style) :
+        rightIcon.props.style;
+      rightIconElement = React.cloneElement(rightIcon, {style: mergedRightIconStyles});
+    }
 
     let secondaryTextElement;
     if (secondaryText) {
@@ -168,6 +216,25 @@ class MenuItem extends Component {
         React.cloneElement(secondaryText, {style: mergedSecondaryTextStyles}) :
         <div style={prepareStyles(styles.secondaryText)}>{secondaryText}</div>;
     }
+
+    let childMenuPopover;
+    if (menuItems) {
+      childMenuPopover = (
+        <Popover 
+          animation={animation}
+          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          anchorEl={this.state.anchorEl}
+          open={this.state.open}
+          useLayerForClickAway={false}
+          onRequestClose={this.handleRequestClose}
+        >
+          <Menu desktop={desktop} disabled={disabled} style={nestedMenuStyle}>
+            {React.Children.map(menuItems, this.cloneMenuItem)}
+          </Menu>
+        </Popover>
+      );
+      other.onTouchTap= this.handleTouchTap;
+    }
     
     return (
       <ListItem 
@@ -176,13 +243,14 @@ class MenuItem extends Component {
         hoverColor={this.context.muiTheme.menuItem.hoverColor}
         innerDivStyle={mergedInnerDivStyles}
         insetChildren={insetChildren}
-        
+        leftIcon={leftIconElement}
         ref="listItem"
-        
+        rightIcon={rightIconElement}
         style={mergedRootStyles}
       >
         {children}
         {secondaryTextElement}
+        {childMenuPopover}
       </ListItem>
     );
   }
