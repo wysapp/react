@@ -7,7 +7,6 @@ let NavigationArrowDropDown = (props) => (
     <path d="M7 10l5 5 5-5z"/>
   </SvgIcon>
 );
-
 NavigationArrowDropDown = pure(NavigationArrowDropDown);
 NavigationArrowDropDown.displayName = 'NavigationArrowDropDown';
 NavigationArrowDropDown.muiName = 'SvgIcon';

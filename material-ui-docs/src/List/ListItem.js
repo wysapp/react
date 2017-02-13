@@ -304,26 +304,22 @@ class ListItem extends Component {
   }
 
   handleKeyboardFocus = (event, isKeyboardFocused) => {
-    console.log('1111111111111-ListItem-handleKeyboardFocus');
     this.setState({isKeyboardFocused: isKeyboardFocused});
     this.props.onKeyboardFocus(event, isKeyboardFocused);
   }
 
   handleMouseEnter = (event) => {
-    console.log('1111111111111-ListItem-handleMouseEnter');
 
     if (!this.state.touch) this.setState({hovered: true});
     this.props.onMouseEnter(event);
   }
 
   handleMouseLeave = (event) => {
-    console.log('1111111111111-ListItem-handleMouseLeave');
     this.setState({hovered: false});
     this.props.onMouseLeave(event);
   }
 
   handleNestedListToggle = (event) => {
-    console.log('1111111111111-ListItem-handleNestedListToggle');
     event.stopPropagation();
     if (this.props.open === null) {
       this.setState({open: !this.state.open}, () => {
@@ -398,6 +394,31 @@ class ListItem extends Component {
 
     const contentChildren = [children];
 
+    if (leftIcon) {
+      const additionalProps = {
+        color: leftIcon.props.color || this.context.muiTheme.listItem.leftIconColor,
+      };
+
+      this.pushElement(
+        contentChildren,
+        leftIcon,
+        Object.assign({}, styles.icons, styles.leftIcon),
+        additionalProps
+      );
+    }
+
+    if (rightIcon) {
+      const additionalProps = {
+        color: rightIcon.props.color || this.context.muiTheme.listItem.rightIconColor,
+      };
+
+      this.pushElement(
+        contentChildren,
+        rightIcon,
+        Object.assign({}, styles.icons, styles.rightIcon),
+        additionalProps
+      );
+    }
 
     if (leftAvatar) {
       this.pushElement(
@@ -405,6 +426,14 @@ class ListItem extends Component {
         leftAvatar,
         Object.assign({}, styles.avatars, styles.leftAvatar)
       );
+    }
+
+    if (rightAvatar) {
+      this.pushElement(
+        contentChildren,
+        rightAvatar,
+        Object.assign({}, styles.avatars, styles.rightAvatar)
+      )
     }
 
     const hasNestListItems = nestedItems.length;

@@ -37,7 +37,7 @@ import IconButtonPage from './components/pages/components/IconButton/Page';
 import CardPage from './components/pages/components/Card/Page';
 
 import GridListPage from './components/pages/components/GridList/Page';
-
+import ListPage from './components/pages/components/List/Page';
 import CircularProgressPage from './components/pages/components/CircularProgress/Page';
 
 import SliderPage from './components/pages/components/Slider/Page';
@@ -69,6 +69,7 @@ const AppRoutes = (
       <Route path="colors" component={Colors} />
       <Route path="themes" component={Themes} />
       <Route path="styles" component={Styles} />
+      
     </Route>
 
     <Redirect from="components" to="/components/app-bar" />
@@ -90,7 +91,7 @@ const AppRoutes = (
       <Route path="card" component={CardPage} />
 
       <Route path="grid-list" component={GridListPage} />
-
+      <Route path="list" component={ListPage} />
       <Route path="circular-progress" component={CircularProgressPage} />
 
 
