@@ -23,7 +23,7 @@ import AutoCompletesPage from './components/pages/components/AutoComplete/Page';
 import AvatarPage from './components/pages/components/Avatar/Page';
 import BadgePage from './components/pages/components/Badge/Page';
 import BottomNavigationPage from './components/pages/components/BottomNavigation/Page';
-
+import DialogPage from './components/pages/components/Dialog/Page';
 import DividerPage from './components/pages/components/Divider/Page';
 
 import FlatButtonPage from './components/pages/components/FlatButton/Page';
@@ -35,7 +35,7 @@ import FloatingActionButtongPage from './components/pages/components/FloatingAct
 import IconButtonPage from './components/pages/components/IconButton/Page';
 
 import CardPage from './components/pages/components/Card/Page';
-
+import ChipPage from './components/pages/components/Chip/Page';
 import GridListPage from './components/pages/components/GridList/Page';
 import ListPage from './components/pages/components/List/Page';
 import MenuPage from './components/pages/components/Menu/Page';
@@ -83,7 +83,7 @@ const AppRoutes = (
 
       <Route path="badge" component={BadgePage} />
       <Route path="bottom-navigation" component={BottomNavigationPage} />
-
+      <Route path="dialog" component={DialogPage} />
       <Route path="divider" component={DividerPage} />
 
       <Route path="flat-button" component={FlatButtonPage} /> 
@@ -92,6 +92,7 @@ const AppRoutes = (
       <Route path="icon-button" component={IconButtonPage} />
       
       <Route path="card" component={CardPage} />
+      <Route path="chip" component={ChipPage} />
 
       <Route path="grid-list" component={GridListPage} />
       <Route path="list" component={ListPage} />
