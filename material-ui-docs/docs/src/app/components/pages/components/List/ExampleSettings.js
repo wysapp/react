@@ -48,6 +48,23 @@ const ListExampleSettings = () => (
         />
       </List>
     </MobileTearSheet>
+    <MobileTearSheet>
+      <List>
+        <ListItem
+          primaryText="When calls and notifications arrive"
+          secondaryText="Always interrupt"
+        />
+      </List>
+      <Divider />
+      <List>
+        <Subheader>Priority Interruptions</Subheader>
+        <ListItem primaryText="Events and reminders" rightToggle={<Toggle />} />
+        <ListItem primaryText="Calls" rightToggle={<Toggle />} />
+        <ListItem primaryText="Messages" rightToggle={<Toggle />} />
+      </List>
+      <Divider />
+    </MobileTearSheet>
+
   </div>
 );
 

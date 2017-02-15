@@ -283,6 +283,32 @@ class ListItem extends Component {
   }
 
 
+  createLabelElement(styles, contentChildren, additionalProps) {
+
+    const {
+      innerDivStyle,
+      style,
+    } = this.props;
+
+    const mergedLabelStyles = Object.assign({},
+      styles.root,
+      styles.innerDiv,
+      innerDivStyle,
+      styles.label,
+      style
+    );
+
+    return (
+      <label 
+        {...additionalProps}
+        style={this.context.muiTheme.prepareStyles(mergedLabelStyles)}
+      >
+        {contentChildren}
+      </label>
+    );
+  }
+
+
   createTextElement(styles, data, key) {
     const {prepareStyles} = this.context.muiTheme;
     if (React.isValidElement(data)) {
@@ -436,6 +462,15 @@ class ListItem extends Component {
       )
     }
 
+
+    if (leftCheckbox) {
+      this.pushElement(
+        contentChildren,
+        leftCheckbox,
+        Object.assign({}, styles.leftCheckbox)
+      );
+    }
+
     const hasNestListItems = nestedItems.length;
     const hasRightElement = rightAvatar || rightIcon || rightIconButton || rightToggle;
     const needsNestedIndicator = hasNestListItems && autoGenerateNestedIndicator && !hasRightElement;
@@ -463,6 +498,14 @@ class ListItem extends Component {
         rightIconButtonElement,
         Object.assign({}, styles.rightIconButton),
         rightIconButtonHandlers
+      );
+    }
+
+    if (rightToggle) {
+      this.pushElement(
+        contentChildren,
+        rightToggle,
+        Object.assign({}, styles.rightToggle)
       );
     }
 

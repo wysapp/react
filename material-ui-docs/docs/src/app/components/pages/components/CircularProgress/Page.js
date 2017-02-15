@@ -10,6 +10,9 @@ import circleProgressReadmeText from './README';
 import CircleProgressExampleSimple from './ExampleSimple';
 import circleProgressExampleSimpleCode from '!raw!./ExampleSimple';
 
+import CircleProgressExampleDeterminate from './ExampleDeterminate';
+import circleProgressExampleDeterminateCode from '!raw!./ExampleDeterminate';
+
 const descriptions = {
   indeterminate: 'By default, the indicator animates continuously.',
   determinate: 'In determinate mode, the indicator adjusts to show the percentage complete, ' +
@@ -27,6 +30,13 @@ const CircleProgressPage = () => (
       code={circleProgressExampleSimpleCode}
     >
       <CircleProgressExampleSimple />
+    </CodeExample>
+    <CodeExample
+      title="Determinate progress"
+      description={descriptions.determinate}
+      code={circleProgressExampleDeterminateCode}
+    >
+      <CircleProgressExampleDeterminate />
     </CodeExample>
 
   </div>

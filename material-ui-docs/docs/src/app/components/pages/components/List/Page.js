@@ -25,6 +25,14 @@ import ListExampleNested from './ExampleNested';
 import listExampleSettingsCode from '!raw!./ExampleSettings';
 import ListExampleSettings from './ExampleSettings';
 
+import listExamplePhoneCode from '!raw!./ExamplePhone';
+import ListExamplePhone from './ExamplePhone';
+
+import listExampleMessagesCode from '!raw!./ExampleMessages';
+import ListExampleMessages from './ExampleMessages';
+
+import listExampleSelectableCode from '!raw!./ExampleSelectable';
+import ListExampleSelectable from './ExampleSelectable';
 import listCode from '!raw!material-ui/List/List';
 import listItemCode from '!raw!material-ui/List/ListItem';
 
@@ -91,6 +99,27 @@ const ListPage = ()=> (
       code={listExampleSettingsCode}
     >
       <ListExampleSettings />
+    </CodeExample>
+    <CodeExample
+      title="Phone list"
+      description={descriptions.phone}
+      code={listExamplePhoneCode}
+    >
+      <ListExamplePhone />
+    </CodeExample>
+    <CodeExample
+      title="Messages list"
+      description={descriptions.messages}
+      code={listExampleMessagesCode}
+    >
+      <ListExampleMessages />
+    </CodeExample>
+    <CodeExample
+      title="Selectable list"
+      description={descriptions.selectable}
+      code={listExampleSelectableCode}
+    >
+      <ListExampleSelectable />
     </CodeExample>
     
     <PropTypeDescription header="### List Properties" code={listCode} />
