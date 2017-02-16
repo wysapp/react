@@ -2,6 +2,7 @@
 
 import React from 'react';
 import EventHandlersMixin from './mixins/event-handlers';
+import HelpersMixin from './mixins/helpers';
 import initialState from './initial-state';
 import defaultProps from './default-props';
 import classnames from 'classnames';
@@ -10,7 +11,7 @@ import assign from 'object-assign';
 import {Track} from './track';
 
 export var InnerSlider = React.createClass({
-  mixins: [EventHandlersMixin],
+  mixins: [HelpersMixin, EventHandlersMixin],
   list: null,
   track: null,
   listRefHandler: function(ref) {
@@ -66,6 +67,12 @@ export var InnerSlider = React.createClass({
       window.attachEvent('onresize', this.onWindowResized);
     }
   },
+
+  onWindowResized: function() {
+
+  },
+
+  
 
   render: function() {
 
