@@ -43,9 +43,33 @@ export default class DialogExampleScrollable extends React.Component {
       />,
     ];
 
+    const radios = [];
+    for (let i = 0; i < 30 ; i++) {
+      radios.push(
+        <RadioButton 
+          key={i}
+          value={`value${i + 1}`}
+          label={`Option ${i+1}`}
+          style={styles.radioButton}
+        />
+      );
+    }
+
     return (
       <div>
         <RaisedButton label="Scrollable Dialog" onTouchTap={this.handleOpen} />
+        <Dialog 
+          title="Scrollable Dialog"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          autoScrollBodyContent={true}
+        >
+          <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
+            {radios}
+          </RadioButtonGroup>
+        </Dialog>
       </div>
     )
   }

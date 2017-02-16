@@ -201,6 +201,17 @@ export default function getMuiTheme(muiTheme, ...more) {
          0 ${d[3]}px ${d[4]}px ${fade(palette.shadowColor, d[5])}`
       )),
     },
+
+    radioButton: {
+      borderColor: palette.textColor,
+      backgroundColor: palette.alternateTextColor,
+      checkedColor: palette.primary1Color,
+      requiredColor: palette.primary1Color,
+      disabledColor: palette.disabledColor,
+      size: 24,
+      labelColor: palette.textColor,
+      labelDisabledColor: palette.disabledColor,
+    }, 
     
     raisedButton: {
       color: palette.alternateTextColor,

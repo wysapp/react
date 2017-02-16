@@ -1,5 +1,4 @@
 'use strict';
-
 import ReactDOM from 'react-dom';
 import assign from 'object-assign';
 
@@ -10,7 +9,9 @@ var checkSpecKeys = function (spec, keysArray) {
 };
 
 export var getTrackCSS = function(spec) {
-  checkSpecKeys(spec, ['left', 'variableWidth', 'slideCount', 'slidesToShow', 'slideWidth']);
+  checkSpecKeys(spec, [
+    'left', 'variableWidth', 'slideCount', 'slidesToShow', 'slideWidth'
+  ]);
 
   var trackWidth, trackHeight;
 
@@ -18,11 +19,11 @@ export var getTrackCSS = function(spec) {
 
   if (!spec.vertical) {
     if (spec.variableWidth) {
-      trackWidth = (spec.slideCount + 2 * spec.slidesToShow) * spec.slideWidth;
-    } else if (spec.centerMode ) {
-      trackWidth = (spec.slideCount + 2 * (spec.slidesToShow + 1)) * spec.slideWidth;
+      trackWidth = (spec.slideCount + 2*spec.slidesToShow) * spec.slideWidth;
+    } else if (spec.centerMode) {
+      trackWidth = (spec.slideCount + 2*(spec.slidesToShow + 1)) * spec.slideWidth;
     } else {
-      trackWidth = (spec.slideCount + 2 * spec.slidesToShow) * spec.slideWidth;
+      trackWidth = (spec.slideCount + 2*spec.slidesToShow) * spec.slideWidth;
     }
   } else {
     trackHeight = trackChildren * spec.slideHeight;
@@ -38,13 +39,14 @@ export var getTrackCSS = function(spec) {
   };
 
   if (trackWidth) {
-    assign(style, {width: trackWidth});
+    assign(style, { width: trackWidth });
   }
 
   if (trackHeight) {
-    assign(style, {height: trackHeight});
+    assign(style, { height: trackHeight });
   }
 
+  // Fallback for IE8
   if (window && !window.addEventListener && window.attachEvent) {
     if (!spec.vertical) {
       style.marginLeft = spec.left + 'px';
@@ -53,6 +55,18 @@ export var getTrackCSS = function(spec) {
     }
   }
 
+  return style;
+};
+
+export var getTrackAnimateCSS = function (spec) {
+  checkSpecKeys(spec, [
+    'left', 'variableWidth', 'slideCount', 'slidesToShow', 'slideWidth', 'speed', 'cssEase'
+  ]);
+
+  var style = getTrackCSS(spec);
+  // useCSS is true by default so it can be undefined
+  style.WebkitTransition = '-webkit-transform ' + spec.speed + 'ms ' + spec.cssEase;
+  style.transition = 'transform ' + spec.speed + 'ms ' + spec.cssEase;
   return style;
 };
 
@@ -137,5 +151,3 @@ export var getTrackLeft = function (spec) {
 
   return targetLeft;
 };
-
-

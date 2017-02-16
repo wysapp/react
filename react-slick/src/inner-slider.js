@@ -136,6 +136,9 @@ export var InnerSlider = React.createClass({
           ref={this.listRefHandler}
           className="slick-list"
           style={listStyle}
+          onMouseDown={this.swipeStart}
+          onMouseMove={this.swipeMove}
+          onMouseUp={this.swipeEnd}
         >
           <Track ref={this.trackRefHandler} {...trackProps}>
             {this.props.children}
