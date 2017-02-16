@@ -44,6 +44,8 @@ import DropDownMenuPage from './components/pages/components/DropDownMenu/Page';
 import CircularProgressPage from './components/pages/components/CircularProgress/Page';
 
 import SliderPage from './components/pages/components/Slider/Page';
+import RadioButtonPage from './components/pages/components/RadioButton/Page';
+import SnackbarPage from './components/pages/components/Snackbar/Page';
 import StepperPage from './components/pages/components/Stepper/Page';
 import TablePage from './components/pages/components/Table/Page';
 import TabsPage from './components/pages/components/Tabs/Page';
@@ -103,6 +105,8 @@ const AppRoutes = (
 
 
       <Route path="slider" component={SliderPage} />
+      <Route path="radio-button" component={RadioButtonPage} />
+      <Route path="snackbar" component={SnackbarPage} />
       <Route path="stepper" component={StepperPage} />
       <Route path="table" component={TablePage} />
       <Route path="tabs" component={TabsPage} />

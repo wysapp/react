@@ -9,31 +9,43 @@ function getStyles(props, context) {
 
   return {
     icon: {
-
+      height: radioButton.size,
+      width: radioButton.size,
     },
     target: {
-
+      transition: transitions.easeOut(),
+      position: 'absolute',
+      opacity: 1,
+      transform: 'scale(1)',
+      fill: radioButton.borderColor,
     },
     fill: {
-
+      position: 'absolute',
+      opacity: 1,
+      transform: 'scale(0)',
+      transformOrigin: '50% 50%',
+      transition: transitions.easeOut(),
+      fill: radioButton.checkedColor,
     },
     targetWhenChecked: {
-
+      opacity: 0,
+      transform: 'scale(0)',
     },
     fillWhenChecked: {
-
+      opacity: 1,
+      transform: 'scale(1)',
     },
     targetWhenDisabled: {
-
+      fill: radioButton.disabledColor,
     },
     fillWhenDisabled: {
-
+      fill: radioButton.disabledColor,
     },
     label: {
-
+      color: props.disabled ? radioButton.labelDisabledColor : radioButton.labelColor,
     },
     ripple: {
-
+      color: props.checked ? radioButton.checkedColor : radioButton.borderColor,
     },
   };
 }
@@ -64,6 +76,13 @@ class RadioButton extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
   };
+
+  handleSwitch = (event) => {
+    
+    if (this.props.onCheck) {
+      this.props.onCheck(event, this.props.value);
+    }
+  }
 
   render() {
     const {

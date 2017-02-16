@@ -324,7 +324,7 @@ class EnhancedSwitch extends Component {
     ) : (
       <div style={prepareStyles(wrapStyles)}>
         <div style={prepareStyles(Object.assign({}, trackStyle))} />
-        <Paper style={thumbStyle} zDepth={1} circle={true}> {ripples } </Paper>
+        <Paper style={thumbStyle} zDepth={1} circle={true}> {ripples} </Paper>
       </div>
     );
 

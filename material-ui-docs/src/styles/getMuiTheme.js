@@ -243,6 +243,12 @@ export default function getMuiTheme(muiTheme, ...more) {
       rippleColor: palette.primary1Color,
     },
 
+    snackbar: {
+      textColor: palette.alternateTextColor,
+      backgroundColor: palette.textColor,
+      actionColor: palette.accent1Color,
+    },
+
     subheader: {
       color: fade(palette.textColor, 0.54),
       fontWeight: typography.fontWeightMedium,

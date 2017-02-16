@@ -27,6 +27,52 @@ class RadioButtonGroup extends Component {
     selected: '',
   };
 
+  componentWillMount() {
+    let cnt = 0;
+    let selected = '';
+    const {valueSelected, defaultSelected} = this.props;
+    if (valueSelected !== undefined) {
+      selected = valueSelected;
+    } else if (defaultSelected !== undefined) {
+      selected = defaultSelected;
+    }
+
+    React.Children.forEach(this.props.children, (option) => {
+      if (this.hasCheckAttribute(option)) cnt++;
+    }, this);
+
+    this.setState({
+      numberCheckedRadioButtons: cnt,
+      selected,
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('3333333333333333-RadioButtonGroup-componentWillReceiveProps');
+  }
+
+  hasCheckAttribute(radioButton) {
+    return radioButton.props.hasOwnProperty('checked') && radioButton.props.checked;
+  }
+
+  updateRadioButtons(newSelection) {
+    if (this.state.numberCheckedRadioButtons === 0) {
+      this.setState({selected: newSelection});
+    } else {
+      warning(false, `Material-UI: Cannot select a different radio button while another radio button
+        has the 'checked' property set to true.`);
+    }
+  }
+
+  handleChange = (event, newSelection) => {
+    this.updateRadioButtons(newSelection);
+
+    if (this.state.numberCheckedRadioButtons === 0) {
+      if (this.props.onChange) 
+        this.props.onChange(event, newSelection);
+    }
+  }
+
   render() {
     const {prepareStyles} = this.context.muiTheme;
 
@@ -47,7 +93,7 @@ class RadioButtonGroup extends Component {
           key={option.props.value}
           value={option.props.value}
           label={option.props.label}
-          labelPosition={option.props.labelPosition}
+          labelPosition={this.props.labelPosition}
           onCheck={this.handleChange}
           checked={option.props.value === this.state.selected}
         />
