@@ -6,10 +6,13 @@ import PropTypeDescription from '../../../PropTypeDescription';
 import MarkdownElement from '../../../MarkdownElement';
 
 import SnackbarReadmeText from './README';
-
 import SnackbarExampleSimple from './ExampleSimple';
 import SnackbarExampleSimpleCode from '!raw!./ExampleSimple';
-
+import SnackbarExampleAction from './ExampleAction';
+import SnackbarExampleActionCode from '!raw!./ExampleAction';
+import SnackbarExampleTwice from './ExampleTwice';
+import SnackbarExampleTwiceCode from '!raw!./ExampleTwice';
+import SnackbarCode from '!raw!material-ui/Snackbar/Snackbar';
 
 const descriptions = {
   simple: '`Snackbar` is a controlled component, and is displayed when `open` is `true`. Click away from the ' +
@@ -26,7 +29,6 @@ const SnackbarPage = () => {
     <div>
       <Title render={(previousTitle) => `Snackbar - ${previousTitle}`} />
       <MarkdownElement text={SnackbarReadmeText} />
-
       <CodeExample
         title="Simple example"
         description={descriptions.simple}
@@ -34,8 +36,23 @@ const SnackbarPage = () => {
       >
         <SnackbarExampleSimple />
       </CodeExample>
+      <CodeExample
+        title="Example action"
+        description={descriptions.action}
+        code={SnackbarExampleActionCode}
+      >
+        <SnackbarExampleAction />
+      </CodeExample>
+      <CodeExample
+        title="Consecutive Snackbars"
+        description={descriptions.consecutive}
+        code={SnackbarExampleTwiceCode}
+      >
+        <SnackbarExampleTwice />
+      </CodeExample>
+      <PropTypeDescription code={SnackbarCode} />
     </div>
   );
-}
+};
 
 export default SnackbarPage;

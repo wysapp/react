@@ -11,6 +11,18 @@ export default class SnackbarExampleSimple extends React.Component {
     };
   }
 
+  handleTouchTap = () => {
+    this.setState({
+      open: true,
+    });
+  }
+
+  handleRequestClose = () => {
+    this.setState({
+      open:false,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -22,7 +34,7 @@ export default class SnackbarExampleSimple extends React.Component {
           open={this.state.open}
           message="Event added to your calendar"
           autoHideDuration={4000}
-          onRequestClose={this.handleRequestColor}
+          onRequestClose={this.handleRequestClose}
         />
       </div>
     );

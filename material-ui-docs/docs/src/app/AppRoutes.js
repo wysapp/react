@@ -41,7 +41,10 @@ import ListPage from './components/pages/components/List/Page';
 import MenuPage from './components/pages/components/Menu/Page';
 import IconMenuPage from './components/pages/components/IconMenu/Page';
 import DropDownMenuPage from './components/pages/components/DropDownMenu/Page';
+import PopoverPage from './components/pages/components/Popover/Page';
 import CircularProgressPage from './components/pages/components/CircularProgress/Page';
+
+import SelectFieldPage from './components/pages/components/SelectField/Page';
 
 import SliderPage from './components/pages/components/Slider/Page';
 import RadioButtonPage from './components/pages/components/RadioButton/Page';
@@ -101,8 +104,10 @@ const AppRoutes = (
       <Route path="menu" component={MenuPage} />
       <Route path="icon-menu" component={IconMenuPage} />
       <Route path="dropdown-menu" component={DropDownMenuPage} />
+      <Route path="popover" component={PopoverPage} />
       <Route path="circular-progress" component={CircularProgressPage} />
 
+      <Route path="select-field" component={SelectFieldPage} />
 
       <Route path="slider" component={SliderPage} />
       <Route path="radio-button" component={RadioButtonPage} />
