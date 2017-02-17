@@ -1,0 +1,14 @@
+/**
+ * @providesModule DraftEditor
+ * @permanent
+ */
+
+/**
+ * We inherit the height of the container by default
+ */
+.DraftEditor/root,
+.DraftEditor/editorContainer,
+.public/DraftEditor/content {
+  height: inherit;
+  text-align: initial;
+}
