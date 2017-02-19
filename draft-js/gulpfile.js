@@ -217,5 +217,6 @@ gulp.task('dev', function() {
 });
 
 gulp.task('default', function(cb) {
-  runSequence('check-dependencies', 'clean', ['modules', 'flow'], ['dist', 'dist:min'], cb);
+  // runSequence('check-dependencies', 'clean', ['modules', 'flow'], ['dist', 'dist:min'], cb);
+  runSequence( 'clean', ['modules', 'flow'], ['dist', 'dist:min'], cb);
 });

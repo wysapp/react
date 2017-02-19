@@ -10,7 +10,7 @@
  * @jsx React.DOM
  */
 
-var React = require('react');
+var React = require('React');
 var HeaderLinks = require('HeaderLinks');
 
 var Site = React.createClass({
@@ -34,6 +34,7 @@ var Site = React.createClass({
           <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.34.4/es6-shim.min.js"></script>
         </head>
         <body>
+
           <div className="container">
             <div className="nav-main">
               <div className="wrap">
@@ -49,10 +50,9 @@ var Site = React.createClass({
             <footer className="wrap">
               <div className="right">&copy; 2016 Facebook Inc.</div>
             </footer>
-
           </div>
 
-          <div id="fb-root" />          
+          <div id="fb-root" />
           <script dangerouslySetInnerHTML={{__html: `
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -70,7 +70,7 @@ var Site = React.createClass({
         </body>
       </html>
     );
-  }
+  },
 });
 
 module.exports = Site;

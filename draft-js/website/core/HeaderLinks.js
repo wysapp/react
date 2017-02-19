@@ -10,7 +10,7 @@
  * @jsx React.DOM
  */
 
-var React = require('react');
+var React = require('React');
 
 var HeaderLinks = React.createClass({
   links: [
@@ -24,15 +24,14 @@ var HeaderLinks = React.createClass({
         {this.links.map(function(link) {
           return (
             <li key={link.section}>
-              <a 
+              <a
                 href={link.href}
-                className={link.section === this.props.section ? 'active' : ''} >
+                className={link.section === this.props.section ? 'active' : ''}>
                 {link.text}
               </a>
             </li>
           );
-        }, this)
-        }
+        }, this)}
       </ul>
     );
   },
